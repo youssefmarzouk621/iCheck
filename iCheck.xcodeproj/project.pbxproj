@@ -16,6 +16,11 @@
 		9C7082592567D69500A79D32 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C7082572567D69500A79D32 /* LaunchScreen.storyboard */; };
 		9C7082642567D69500A79D32 /* iCheckTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7082632567D69500A79D32 /* iCheckTests.swift */; };
 		9C70826F2567D69500A79D32 /* iCheckUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C70826E2567D69500A79D32 /* iCheckUITests.swift */; };
+		9C7082812567E5F200A79D32 /* JosefinSans-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9C7082802567E5F200A79D32 /* JosefinSans-VariableFont_wght.ttf */; };
+		9C7082872568012600A79D32 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7082862568012600A79D32 /* LoginController.swift */; };
+		9C70828F2568043400A79D32 /* SignController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C70828E2568043400A79D32 /* SignController.swift */; };
+		9C7082942568105900A79D32 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7082932568105900A79D32 /* HomeController.swift */; };
+		9C7082A9256869F200A79D32 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7082A8256869F100A79D32 /* Product.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +56,11 @@
 		9C70826A2567D69500A79D32 /* iCheckUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iCheckUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C70826E2567D69500A79D32 /* iCheckUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCheckUITests.swift; sourceTree = "<group>"; };
 		9C7082702567D69500A79D32 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9C7082802567E5F200A79D32 /* JosefinSans-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSans-VariableFont_wght.ttf"; sourceTree = "<group>"; };
+		9C7082862568012600A79D32 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
+		9C70828E2568043400A79D32 /* SignController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignController.swift; sourceTree = "<group>"; };
+		9C7082932568105900A79D32 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
+		9C7082A8256869F100A79D32 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,9 +111,11 @@
 		9C7082482567D69200A79D32 /* iCheck */ = {
 			isa = PBXGroup;
 			children = (
+				9C7082A7256869BB00A79D32 /* Models */,
+				9C7082852568009F00A79D32 /* Controllers */,
+				9C70827F2567E50A00A79D32 /* fonts */,
 				9C7082492567D69200A79D32 /* AppDelegate.swift */,
 				9C70824B2567D69200A79D32 /* SceneDelegate.swift */,
-				9C70824D2567D69200A79D32 /* ViewController.swift */,
 				9C70824F2567D69200A79D32 /* Main.storyboard */,
 				9C7082552567D69500A79D32 /* Assets.xcassets */,
 				9C7082572567D69500A79D32 /* LaunchScreen.storyboard */,
@@ -129,6 +141,33 @@
 				9C7082702567D69500A79D32 /* Info.plist */,
 			);
 			path = iCheckUITests;
+			sourceTree = "<group>";
+		};
+		9C70827F2567E50A00A79D32 /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				9C7082802567E5F200A79D32 /* JosefinSans-VariableFont_wght.ttf */,
+			);
+			path = fonts;
+			sourceTree = "<group>";
+		};
+		9C7082852568009F00A79D32 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				9C70824D2567D69200A79D32 /* ViewController.swift */,
+				9C7082862568012600A79D32 /* LoginController.swift */,
+				9C70828E2568043400A79D32 /* SignController.swift */,
+				9C7082932568105900A79D32 /* HomeController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		9C7082A7256869BB00A79D32 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				9C7082A8256869F100A79D32 /* Product.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -235,6 +274,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9C7082592567D69500A79D32 /* LaunchScreen.storyboard in Resources */,
+				9C7082812567E5F200A79D32 /* JosefinSans-VariableFont_wght.ttf in Resources */,
 				9C7082562567D69500A79D32 /* Assets.xcassets in Resources */,
 				9C7082512567D69200A79D32 /* Main.storyboard in Resources */,
 			);
@@ -262,9 +302,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				9C70824E2567D69200A79D32 /* ViewController.swift in Sources */,
+				9C7082A9256869F200A79D32 /* Product.swift in Sources */,
 				9C70824A2567D69200A79D32 /* AppDelegate.swift in Sources */,
+				9C7082942568105900A79D32 /* HomeController.swift in Sources */,
 				9C7082542567D69200A79D32 /* iCheck.xcdatamodeld in Sources */,
 				9C70824C2567D69200A79D32 /* SceneDelegate.swift in Sources */,
+				9C70828F2568043400A79D32 /* SignController.swift in Sources */,
+				9C7082872568012600A79D32 /* LoginController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
