@@ -27,14 +27,17 @@ class HomeController: UIViewController {
         Product(id: "5", name: "Reebok Club C85 LaHaine", description: "Les Berges du Lac Walkway ,Tunis",Brandlogo:"fashionCategorie",image: "reebokClubC85LaHaine"),
     ]
     
+    
+    
+    
     fileprivate let chat = [
-        Customer(id: "1", firstName: "Dhia", lastName: "Ben Hamouda", email: "dhia.benhamouda@esprit.tn", password: "1234", img: "dhia.bh"),
-        Customer(id: "2", firstName: "Youssef", lastName: "Marzouk", email: "youssef.marzouk@esprit.tn", password: "1234", img: "youssef.marzouk"),
-        Customer(id: "3", firstName: "Mehdi", lastName: "Behira", email: "mehdi.behira@esprit.tn", password: "1234", img: "mehdi.behira"),
-        Customer(id: "4", firstName: "Ghassen", lastName: "Boughzela", email: "ghassen.boughzela@esprit.tn", password: "1234", img: "ghassen.bg"),
-        Customer(id: "5", firstName: "Eya", lastName: "Loukil", email: "eya.loukil@esprit.tn", password: "1234", img: "eya.loukil"),
-        Customer(id: "6", firstName: "Chekib", lastName: "Hajji", email: "chekib.hajji@esprit.tn", password: "1234", img: "chekib.hajji"),
-        Customer(id: "7", firstName: "Amine", lastName: "Mbarki", email: "amine.mbarki@esprit.tn", password: "1234", img: "amine.mbarki"),
+        Customer(id: "1", firstName: "Dhia", lastName: "Ben Hamouda", email: "dhia.benhamouda@esprit.tn", password: "1234",phone:"92425910",sexe:"homme", img: "dhia.bh"),
+        Customer(id: "2", firstName: "Youssef", lastName: "Marzouk", email: "youssef.marzouk@esprit.tn", password: "1234",phone:"92425910",sexe:"homme", img: "youssef.marzouk"),
+        Customer(id: "3", firstName: "Mehdi", lastName: "Behira", email: "mehdi.behira@esprit.tn", password: "1234",phone:"92425910",sexe:"homme", img: "mehdi.behira"),
+        Customer(id: "4", firstName: "Ghassen", lastName: "Boughzela", email: "ghassen.boughzela@esprit.tn", password: "1234",phone:"92425910",sexe:"homme", img: "ghassen.bg"),
+        Customer(id: "5", firstName: "Eya", lastName: "Loukil", email: "eya.loukil@esprit.tn", password: "1234",phone:"92425910",sexe:"homme", img: "eya.loukil"),
+        Customer(id: "6", firstName: "Chekib", lastName: "Hajji", email: "chekib.hajji@esprit.tn", password: "1234",phone:"92425910",sexe:"homme", img: "chekib.hajji"),
+        Customer(id: "7", firstName: "Amine", lastName: "Mbarki", email: "amine.mbarki@esprit.tn", password: "1234",phone:"92425910",sexe:"homme", img: "amine.mbarki"),
     ]
     @IBOutlet weak var trendingProducts: UICollectionView! = {
         let layout = UICollectionViewFlowLayout()
@@ -58,6 +61,7 @@ class HomeController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.hideKeyboardWhenTappedAround()
         
         trendingProducts.delegate = self
         trendingProducts.dataSource = self
@@ -74,11 +78,17 @@ class HomeController: UIViewController {
         
     }
     
-    
+}
 
-    
-
-
+extension UIViewController {
+    func hideKeyboardWhenTappedAround() {
+        let tap: UITapGestureRecognizer =     UITapGestureRecognizer(target: self, action:    #selector(UIViewController.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
 }
 
 

@@ -23,6 +23,7 @@
 		9C70828F2568043400A79D32 /* SignController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C70828E2568043400A79D32 /* SignController.swift */; };
 		9C7082942568105900A79D32 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7082932568105900A79D32 /* HomeController.swift */; };
 		9C7082A9256869F200A79D32 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7082A8256869F100A79D32 /* Product.swift */; };
+		9C920F2B25710FE10052D4DE /* netService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C920F2A25710FE10052D4DE /* netService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,7 @@
 		9C70828E2568043400A79D32 /* SignController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignController.swift; sourceTree = "<group>"; };
 		9C7082932568105900A79D32 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 		9C7082A8256869F100A79D32 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
+		9C920F2A25710FE10052D4DE /* netService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = netService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +127,7 @@
 				9C7082572567D69500A79D32 /* LaunchScreen.storyboard */,
 				9C70825A2567D69500A79D32 /* Info.plist */,
 				9C7082522567D69200A79D32 /* iCheck.xcdatamodeld */,
+				9C920F2A25710FE10052D4DE /* netService.swift */,
 			);
 			path = iCheck;
 			sourceTree = "<group>";
@@ -309,6 +312,7 @@
 			files = (
 				9C70824E2567D69200A79D32 /* ViewController.swift in Sources */,
 				9C7082A9256869F200A79D32 /* Product.swift in Sources */,
+				9C920F2B25710FE10052D4DE /* netService.swift in Sources */,
 				9C70824A2567D69200A79D32 /* AppDelegate.swift in Sources */,
 				9C7082942568105900A79D32 /* HomeController.swift in Sources */,
 				9C7082542567D69200A79D32 /* iCheck.xcdatamodeld in Sources */,
