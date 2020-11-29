@@ -7,10 +7,15 @@
 
 import Foundation
 
-struct Product {
-    var id:String
+struct Product :Decodable{
+    var _id:String
     var name:String
     var description:String
-    var Brandlogo:String
-    var image:String
+    var image:[String]
+    var brand:String
+    var category:String
+    var address:String
+    var available:String
+    var rate:String
+    var reviews:[Review]
 }

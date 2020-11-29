@@ -8,12 +8,16 @@
 import Foundation
 
 struct Customer:Decodable {
-    var id:String
+    var _id:String
     var firstName:String
     var lastName:String
     var email:String
     var password:String
     var phone:String
     var sexe:String
-    var img:String
+    var avatar:String
+    /*var createdAt:Date
+    var updatedAt:Date*/
+    
+
 }

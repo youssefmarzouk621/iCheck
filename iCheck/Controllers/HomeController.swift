@@ -6,6 +6,29 @@
 //
 
 import UIKit
+import CoreData
+
+extension UIImageView {
+    func downloaded(from url: URL, contentMode mode: UIView.ContentMode = .scaleAspectFit) {
+        contentMode = mode
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            guard
+                let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
+                let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
+                let data = data, error == nil,
+                let image = UIImage(data: data)
+                else { return }
+            DispatchQueue.main.async() { [weak self] in
+                self?.image = image
+            }
+        }.resume()
+    }
+    func downloaded(from link: String, contentMode mode: UIView.ContentMode = .scaleAspectFit) {
+        guard let url = URL(string: link) else { return }
+        downloaded(from: url, contentMode: mode)
+    }
+}
+
 
 class HomeController: UIViewController {
 
@@ -20,25 +43,13 @@ class HomeController: UIViewController {
     @IBOutlet weak var Category3: UIImageView!
     @IBOutlet weak var categoryName3: UILabel!
    
-    fileprivate let data = [
-        Product(id: "1", name: "Nike Air Force", description: "Les Berges du Lac Walkway ,Tunis",Brandlogo:"fashionCategorie",image: "nikeair"),
-        Product(id: "2", name: "Adidas Originals WX 2K Boost", description: "Les Berges du Lac Walkway ,Tunis",Brandlogo:"fashionCategorie",image: "adidasOriginalsWX2KBoost"),
-        Product(id: "4", name: "New Balance 574", description: "Les Berges du Lac Walkway ,Tunis",Brandlogo:"fashionCategorie",image: "newBalance574"),
-        Product(id: "5", name: "Reebok Club C85 LaHaine", description: "Les Berges du Lac Walkway ,Tunis",Brandlogo:"fashionCategorie",image: "reebokClubC85LaHaine"),
-    ]
+    fileprivate let baseURL = "https://polar-peak-71928.herokuapp.com/"
+
+    var connected:Customer? = nil
+    var customers = [Customer]()
+    var products = [Product]()
     
-    
-    
-    
-    fileprivate let chat = [
-        Customer(id: "1", firstName: "Dhia", lastName: "Ben Hamouda", email: "dhia.benhamouda@esprit.tn", password: "1234",phone:"92425910",sexe:"homme", img: "dhia.bh"),
-        Customer(id: "2", firstName: "Youssef", lastName: "Marzouk", email: "youssef.marzouk@esprit.tn", password: "1234",phone:"92425910",sexe:"homme", img: "youssef.marzouk"),
-        Customer(id: "3", firstName: "Mehdi", lastName: "Behira", email: "mehdi.behira@esprit.tn", password: "1234",phone:"92425910",sexe:"homme", img: "mehdi.behira"),
-        Customer(id: "4", firstName: "Ghassen", lastName: "Boughzela", email: "ghassen.boughzela@esprit.tn", password: "1234",phone:"92425910",sexe:"homme", img: "ghassen.bg"),
-        Customer(id: "5", firstName: "Eya", lastName: "Loukil", email: "eya.loukil@esprit.tn", password: "1234",phone:"92425910",sexe:"homme", img: "eya.loukil"),
-        Customer(id: "6", firstName: "Chekib", lastName: "Hajji", email: "chekib.hajji@esprit.tn", password: "1234",phone:"92425910",sexe:"homme", img: "chekib.hajji"),
-        Customer(id: "7", firstName: "Amine", lastName: "Mbarki", email: "amine.mbarki@esprit.tn", password: "1234",phone:"92425910",sexe:"homme", img: "amine.mbarki"),
-    ]
+
     @IBOutlet weak var trendingProducts: UICollectionView! = {
         let layout = UICollectionViewFlowLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -58,7 +69,28 @@ class HomeController: UIViewController {
     }()
     
  
-
+    
+    @IBAction func seeAllProduct(_ sender: UIButton) {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            
+        let managedContext = appDelegate.persistentContainer.viewContext
+            
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Connected")
+            
+        do {
+            let result = try managedContext.fetch(fetchRequest)
+            for obj in result {
+                managedContext.delete(obj)
+            }
+            try managedContext.save()
+            print("deleted connected user")
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+        performSegue(withIdentifier: "logoutSegue", sender: sender)
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
@@ -74,8 +106,45 @@ class HomeController: UIViewController {
         Search.layer.borderColor = UIColor(red: 55/255, green: 59/255, blue: 100/255, alpha: 1).cgColor
         Search.layer.cornerRadius = 5
         
-       
         
+        
+        let productsUrl = URL(string: baseURL+"api/products/")
+        URLSession.shared.dataTask(with: productsUrl!) { (data,response,error) in
+            if error == nil{
+
+                do {
+                    self.products = try JSONDecoder().decode([Product].self, from: data!)
+                    /*let json = try JSONSerialization.jsonObject(with: data!, options: [])
+                    print("before parse")
+                    print(json)*/
+                } catch {
+                    print("parse json error")
+                }
+                
+                DispatchQueue.main.async {
+                    self.trendingProducts.reloadData()
+                    
+                }
+            }
+        }.resume()
+        
+        
+        
+        let friendsUrl = URL(string: baseURL+"api/user/")
+        URLSession.shared.dataTask(with: friendsUrl!) { (data,response,error) in
+            if error == nil{
+                do {
+                    self.customers = try JSONDecoder().decode([Customer].self, from: data!)
+                } catch {
+                    print("parse json error")
+                }
+                
+                DispatchQueue.main.async {
+                    self.Friends.reloadData()
+                    
+                }
+            }
+        }.resume()
     }
     
 }
@@ -117,9 +186,9 @@ extension HomeController: UICollectionViewDelegateFlowLayout, UICollectionViewDa
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if (collectionView==Friends) {
-            return chat.count
+            return customers.count
         }
-        return data.count
+        return products.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -132,7 +201,11 @@ extension HomeController: UICollectionViewDelegateFlowLayout, UICollectionViewDa
             borderView.layer.cornerRadius = borderView.bounds.width/2
             let imageView = contentView.viewWithTag(1) as! UIImageView
             imageView.layer.cornerRadius = imageView.bounds.width/2
-            imageView.image = UIImage(named: chat[indexPath.row].img)
+
+            let avatarUrl = baseURL + "uploads/users/" + customers[indexPath.row].avatar
+            imageView.downloaded(from: avatarUrl)
+            
+            
             
             
             return cell
@@ -149,10 +222,15 @@ extension HomeController: UICollectionViewDelegateFlowLayout, UICollectionViewDa
         let name = contentView.viewWithTag(3) as! UILabel
         let description = contentView.viewWithTag(4) as! UILabel
         
-        backgroundImage.image = UIImage(named: data[indexPath.row].image)
-        BrandLogo.image = UIImage(named: data[indexPath.row].Brandlogo)
-        name.text = data[indexPath.row].name
-        description.text = data[indexPath.row].description
+       
+        let imgUrl = baseURL + "uploads/products/" + products[indexPath.row].image[0]
+        
+        backgroundImage.downloaded(from: imgUrl)
+        backgroundImage.contentMode = .scaleAspectFill
+        BrandLogo.downloaded(from: imgUrl)
+        BrandLogo.contentMode = .scaleAspectFill
+        name.text = products[indexPath.row].name
+        description.text = products[indexPath.row].description
         
         return cell
     }
@@ -161,7 +239,7 @@ extension HomeController: UICollectionViewDelegateFlowLayout, UICollectionViewDa
     {
         if segue.identifier=="prodDetailSegue" {
             let indexPath = sender as! Int
-            let product = data[indexPath]
+            let product = products[indexPath]
             let destination = segue.destination as! ProductDetailsController
             
             destination.Prod = product

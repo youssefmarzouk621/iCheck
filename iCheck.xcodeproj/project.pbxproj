@@ -24,6 +24,7 @@
 		9C7082942568105900A79D32 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7082932568105900A79D32 /* HomeController.swift */; };
 		9C7082A9256869F200A79D32 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7082A8256869F100A79D32 /* Product.swift */; };
 		9C920F2B25710FE10052D4DE /* netService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C920F2A25710FE10052D4DE /* netService.swift */; };
+		9CAF00C5257436B0008A8FAE /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CAF00C4257436B0008A8FAE /* Review.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,7 @@
 		9C7082932568105900A79D32 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 		9C7082A8256869F100A79D32 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		9C920F2A25710FE10052D4DE /* netService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = netService.swift; sourceTree = "<group>"; };
+		9CAF00C4257436B0008A8FAE /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,6 +177,7 @@
 			children = (
 				9C7082A8256869F100A79D32 /* Product.swift */,
 				9C2E2763256986370008E3FA /* Customer.swift */,
+				9CAF00C4257436B0008A8FAE /* Review.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -315,6 +318,7 @@
 				9C920F2B25710FE10052D4DE /* netService.swift in Sources */,
 				9C70824A2567D69200A79D32 /* AppDelegate.swift in Sources */,
 				9C7082942568105900A79D32 /* HomeController.swift in Sources */,
+				9CAF00C5257436B0008A8FAE /* Review.swift in Sources */,
 				9C7082542567D69200A79D32 /* iCheck.xcdatamodeld in Sources */,
 				9C2E2764256986370008E3FA /* Customer.swift in Sources */,
 				9C2E276C2569C73D0008E3FA /* ProductDetailsController.swift in Sources */,
