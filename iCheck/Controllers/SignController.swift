@@ -8,9 +8,7 @@
 import UIKit
 import CoreData
 
-struct backendResponse : Decodable {
-    var message:String
-}
+
 
 class SignController: UIViewController {
 

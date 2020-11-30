@@ -4,10 +4,11 @@ platform :ios, '9.0'
 target 'iCheck' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
-
+  use_modular_headers!
   # Pods for iCheck
   pod 'Cosmos'
-  pod 'TinuConstraints'
+  pod 'TinyConstraints'
+  pod 'SkeletonView'
 
   target 'iCheckTests' do
     inherit! :search_paths

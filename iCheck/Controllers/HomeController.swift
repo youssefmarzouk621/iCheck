@@ -95,6 +95,8 @@ class HomeController: UIViewController {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
         
+        
+        
         trendingProducts.delegate = self
         trendingProducts.dataSource = self
         
@@ -123,7 +125,6 @@ class HomeController: UIViewController {
                 
                 DispatchQueue.main.async {
                     self.trendingProducts.reloadData()
-                    
                 }
             }
         }.resume()
@@ -174,8 +175,9 @@ extension UIViewController {
 
 
 
-
 extension HomeController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+    
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if(collectionView==Friends){
             
@@ -202,8 +204,11 @@ extension HomeController: UICollectionViewDelegateFlowLayout, UICollectionViewDa
             let imageView = contentView.viewWithTag(1) as! UIImageView
             imageView.layer.cornerRadius = imageView.bounds.width/2
 
+            
             let avatarUrl = baseURL + "uploads/users/" + customers[indexPath.row].avatar
             imageView.downloaded(from: avatarUrl)
+            
+            
             
             
             

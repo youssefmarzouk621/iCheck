@@ -20,7 +20,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Connected")
         do {
             let result = try managedContext.fetch(fetchRequest)
-            //print(result)
             
             if result.isEmpty {//login controller
                 print("no user in core")

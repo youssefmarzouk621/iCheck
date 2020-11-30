@@ -13,6 +13,7 @@ class LoginController: UIViewController {
     @IBOutlet weak var Password: UITextField!
     fileprivate let baseURL = "https://polar-peak-71928.herokuapp.com/"
     public var connectedUser:Customer = Customer(_id: "", firstName: "", lastName: "", email: "", password: "", phone: "", sexe: "", avatar: "")
+    public var response:backendResponse = backendResponse(message: "")
     
 
     
@@ -47,9 +48,19 @@ class LoginController: UIViewController {
             URLSession.shared.dataTask(with: request) { (data,response,error) in
                 if error == nil{
                     do {
-                        self.connectedUser = try JSONDecoder().decode(Customer.self, from: data!)
+                        //self.connectedUser = try JSONDecoder().decode(Customer.self, from: data!)
                         let httpResponse = response as? HTTPURLResponse
                         status = httpResponse!.statusCode
+                        if !(status==200) {
+                            print("serialize backendresponse")
+                            self.response = try JSONDecoder().decode(backendResponse.self, from: data!)
+                        }else{
+                            self.connectedUser = try JSONDecoder().decode(Customer.self, from: data!)
+                            print("serialize user")
+                        }
+                        /*var json = try JSONSerialization.jsonObject(with: data!, options: [])
+                        print(json)*/
+                        
                     } catch {
                         print("parse json error")
                     }

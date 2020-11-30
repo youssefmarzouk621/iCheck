@@ -6,13 +6,14 @@
 //
 
 import UIKit
-
-
+import CoreData
+import Cosmos
 class ProductDetailsController: UIViewController {
 
     var Prod:Product?
-    
-    /*var reviewsList = [Review(_id: "idreview", review: "testing", user: Customer(_id: "rrr", firstName: "youssef", lastName: "marzouk", email: "youssef", password: "eee", phone: "eee", sexe: "gggg", avatar: "youssef.marzouk"), rate: "7")]*/
+    var rateValue:Double=3
+    var connectedUser:Customer = Customer(_id: "notyet", firstName: "", lastName: "", email: "", password: "", phone: "", sexe: "", avatar: "")
+    public var backResponse:backendResponse = backendResponse(message: "")
     fileprivate let baseURL = "https://polar-peak-71928.herokuapp.com/"
     
     @IBOutlet weak var moreImages: UIButton!
@@ -41,23 +42,139 @@ class ProductDetailsController: UIViewController {
     }
     
     
+    
+    @IBOutlet weak var cosmosRating: CosmosView!
+    @IBOutlet weak var rateDescription: UILabel!
+    @IBOutlet weak var reviewField: UITextField!
+    @IBAction func submitReview(_ sender: UIButton) {
+        let reviewDescription = reviewField.text
+        if reviewDescription == "" {
+            let alert = UIAlertController(title: "review field is empty", message: "please fill your input", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
+            self.present(alert, animated: true)
+        }else{
+   
+            print("prodId :"+self.Prod!._id)
+            print("review :"+reviewDescription!)
+            print("userId :"+connectedUser._id)
+            print("rate :"+String(self.rateValue))
+            
+            
+            
+            
+            
+            let parameters = ["prodId" : self.Prod!._id, "review" : reviewDescription!, "userId" : connectedUser._id, "rate" : String(self.rateValue)]
+            guard let url = URL(string: baseURL+"api/products/addReview") else { return }
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            guard let httpBody = try? JSONSerialization.data(withJSONObject: parameters, options: []) else { return }
+            request.httpBody = httpBody
+            var status = 0
+            URLSession.shared.dataTask(with: request) { (data,response,error) in
+                if error == nil{
+                    do {
+                        self.backResponse = try JSONDecoder().decode(backendResponse.self, from: data!)
+                        let httpResponse = response as? HTTPURLResponse
+                        status = httpResponse!.statusCode
+                    } catch {
+                        print("parse json error")
+                    }
+                    DispatchQueue.main.async {
+                        if status == 200 {
+                            print(self.backResponse)
+                            let brandNew = Review(_id: "", review: reviewDescription!, user: self.connectedUser, rate: String(self.rateValue))
+                            self.Prod!.reviews.append(brandNew)
+                            self.Reviews.reloadData()
+                            
+                            self.rateDescription.text = "Good"
+                            self.reviewField.text = ""
+                            self.cosmosRating.rating = 3
+                        }
+                    }
+                }
+            }.resume()
+            
+            
+            
+        }
+    }
+    
+    
+    
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        super.hideKeyboardWhenTappedAround()
         productImages.delegate = self
         productImages.dataSource = self
         
         Reviews.delegate = self
         Reviews.dataSource = self
         
-        moreImages.setTitle("See all("+String(Prod!.image.count)+")", for: .normal)
         
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Connected")
+        do {
+            let result = try managedContext.fetch(fetchRequest)
+            for obj in result {
+                print("getting info from core data")
+                self.connectedUser._id=(obj.value(forKey: "id") as! String)
+                self.connectedUser.firstName=(obj.value(forKey: "firstName") as! String)
+                self.connectedUser.lastName=(obj.value(forKey: "lastName") as! String)
+                self.connectedUser.email=(obj.value(forKey: "email") as! String)
+                self.connectedUser.password=(obj.value(forKey: "password") as! String)
+                self.connectedUser.phone=(obj.value(forKey: "phone") as! String)
+                self.connectedUser.sexe=(obj.value(forKey: "sexe") as! String)
+                self.connectedUser.avatar=(obj.value(forKey: "avatar") as! String)
+            }
+            
+            
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+        
+        
+        moreImages.setTitle("See all("+String(Prod!.image.count)+")", for: .normal)
         
         let productUrl = baseURL + "uploads/products/" + Prod!.image[0]
         productImage.downloaded(from: productUrl)
         productImage.contentMode = .scaleAspectFill
         productName.text = Prod!.name
         productDescription.text = Prod!.description
+        
+        cosmosRating.didTouchCosmos = { rating in
+            switch rating {
+            case 1:
+                self.rateDescription.text = "Bad"
+            case 2:
+                self.rateDescription.text = "Okay"
+            case 3:
+                self.rateDescription.text = "Good"
+            case 4:
+                self.rateDescription.text = "Great"
+            case 5:
+                self.rateDescription.text = "Amazing"
+            default:
+                self.rateDescription.text = "Good"
+            }
+            self.rateValue = rating
+        }
+        cosmosRating.didFinishTouchingCosmos = { rating in
+            self.rateValue = rating
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
     }
     
 

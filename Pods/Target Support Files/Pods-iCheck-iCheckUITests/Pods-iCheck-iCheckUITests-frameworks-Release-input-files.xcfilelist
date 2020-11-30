@@ -1,0 +1,4 @@
+${PODS_ROOT}/Target Support Files/Pods-iCheck-iCheckUITests/Pods-iCheck-iCheckUITests-frameworks.sh
+${BUILT_PRODUCTS_DIR}/Cosmos/Cosmos.framework
+${BUILT_PRODUCTS_DIR}/SkeletonView/SkeletonView.framework
+${BUILT_PRODUCTS_DIR}/TinyConstraints/TinyConstraints.framework
