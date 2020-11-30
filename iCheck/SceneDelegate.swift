@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -13,10 +14,35 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Connected")
+        do {
+            let result = try managedContext.fetch(fetchRequest)
+            
+            if result.isEmpty {//login controller
+                print("no user in core")
+                guard let _ = (scene as? UIWindowScene) else { return }
+            }else{
+                print("found user")//home controller
+                if let windowScene = scene as? UIWindowScene {
+                    let window = UIWindow(windowScene: windowScene)
+                    let objHomeController = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "TabBarC") as! UITabBarController
+                    window.rootViewController = objHomeController
+                    self.window = window
+                    window.makeKeyAndVisible()
+                }
+            }
+            
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+        
+        
+        
+        
+        
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
