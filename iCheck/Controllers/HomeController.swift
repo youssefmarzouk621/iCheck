@@ -8,26 +8,6 @@
 import UIKit
 import CoreData
 
-extension UIImageView {
-    func downloaded(from url: URL, contentMode mode: UIView.ContentMode = .scaleAspectFit) {
-        contentMode = mode
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            guard
-                let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
-                let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
-                let data = data, error == nil,
-                let image = UIImage(data: data)
-                else { return }
-            DispatchQueue.main.async() { [weak self] in
-                self?.image = image
-            }
-        }.resume()
-    }
-    func downloaded(from link: String, contentMode mode: UIView.ContentMode = .scaleAspectFit) {
-        guard let url = URL(string: link) else { return }
-        downloaded(from: url, contentMode: mode)
-    }
-}
 
 
 class HomeController: UIViewController {
@@ -99,6 +79,9 @@ class HomeController: UIViewController {
         
         trendingProducts.delegate = self
         trendingProducts.dataSource = self
+        
+        
+        
         
         Friends.delegate = self
         Friends.dataSource = self
@@ -174,8 +157,36 @@ extension UIViewController {
 
 
 
-
 extension HomeController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+    
+    
+    
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+            if collectionView == trendingProducts {
+                return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { suggestedActions in
+                    // Create an action for sharing
+                    let share = UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up")) { action in
+                        // Show share sheet
+                    }
+
+                    // Create an action for copy
+                    let rename = UIAction(title: "Copy", image: UIImage(systemName: "doc.on.doc")) { action in
+                        // Perform copy
+                    }
+
+                    // Create an action for delete with destructive attributes (highligh in red)
+                    let delete = UIAction(title: "Delete", image: UIImage(systemName: "trash"), attributes: .destructive) { action in
+                        // Perform delete
+                    }
+
+                    // Create a UIMenu with all the actions as children
+                    return UIMenu(title: "", children: [share, rename, delete])
+                }
+            }else{
+                return nil
+            }
+        }
+    
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -206,7 +217,9 @@ extension HomeController: UICollectionViewDelegateFlowLayout, UICollectionViewDa
 
             
             let avatarUrl = baseURL + "uploads/users/" + customers[indexPath.row].avatar
-            imageView.downloaded(from: avatarUrl)
+            //imageView.sd_setImage(with: URL(string: avatarUrl) )
+            imageView.sd_setImage(with: URL(string: avatarUrl), placeholderImage: UIImage(named: "nikeair"), options: [.continueInBackground, .progressiveLoad])
+            //imageView.downloaded(from: avatarUrl)
             
             
             
@@ -230,9 +243,13 @@ extension HomeController: UICollectionViewDelegateFlowLayout, UICollectionViewDa
        
         let imgUrl = baseURL + "uploads/products/" + products[indexPath.row].image[0]
         
-        backgroundImage.downloaded(from: imgUrl)
+        
+        backgroundImage.sd_setImage(with: URL(string: imgUrl), placeholderImage: UIImage(named: "nikeair"), options: [.continueInBackground, .progressiveLoad])
         backgroundImage.contentMode = .scaleAspectFill
-        BrandLogo.downloaded(from: imgUrl)
+        
+        BrandLogo.sd_setImage(with: URL(string: imgUrl), placeholderImage: UIImage(named: "nikeair"), options: [.continueInBackground, .progressiveLoad])
+        
+        
         BrandLogo.contentMode = .scaleAspectFill
         name.text = products[indexPath.row].name
         description.text = products[indexPath.row].description
@@ -259,3 +276,4 @@ extension HomeController: UICollectionViewDelegateFlowLayout, UICollectionViewDa
         
     }
 }
+

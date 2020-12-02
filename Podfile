@@ -7,8 +7,7 @@ target 'iCheck' do
   use_modular_headers!
   # Pods for iCheck
   pod 'Cosmos'
-  pod 'TinyConstraints'
-  pod 'SkeletonView'
+  pod 'SDWebImage'
 
   target 'iCheckTests' do
     inherit! :search_paths

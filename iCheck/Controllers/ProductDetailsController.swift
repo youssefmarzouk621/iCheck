@@ -83,7 +83,7 @@ class ProductDetailsController: UIViewController {
                     DispatchQueue.main.async {
                         if status == 200 {
                             print(self.backResponse)
-                            let brandNew = Review(_id: "", review: reviewDescription!, user: self.connectedUser, rate: String(self.rateValue))
+                            let brandNew = Review(_id: "", review: reviewDescription!, user: self.connectedUser, rate: self.rateValue)
                             self.Prod!.reviews.append(brandNew)
                             self.Reviews.reloadData()
                             
@@ -140,7 +140,8 @@ class ProductDetailsController: UIViewController {
         moreImages.setTitle("See all("+String(Prod!.image.count)+")", for: .normal)
         
         let productUrl = baseURL + "uploads/products/" + Prod!.image[0]
-        productImage.downloaded(from: productUrl)
+        
+        productImage.sd_setImage(with: URL(string: productUrl), placeholderImage: UIImage(named: "nikeair"), options: [.continueInBackground, .progressiveLoad])
         productImage.contentMode = .scaleAspectFill
         productName.text = Prod!.name
         productDescription.text = Prod!.description
@@ -203,14 +204,14 @@ extension ProductDetailsController: UITableViewDataSource, UITableViewDelegate {
         
         
         let avatarUrl = baseURL + "uploads/users/" + Prod!.reviews[indexPath.row].user.avatar
-        avatar.downloaded(from: avatarUrl)
+        avatar.sd_setImage(with: URL(string: avatarUrl), placeholderImage: UIImage(named: "nikeair"), options: [.continueInBackground, .progressiveLoad])
 
         userName.text = Prod!.reviews[indexPath.row].user.firstName+" "+Prod!.reviews[indexPath.row].user.lastName
         review.text = Prod!.reviews[indexPath.row].review
         
         rateView.layer.cornerRadius = 5
         
-        rating.text = Prod!.reviews[indexPath.row].rate
+        rating.text = String(Prod!.reviews[indexPath.row].rate)
         
         return cell!
     }
@@ -246,7 +247,8 @@ extension ProductDetailsController: UICollectionViewDelegateFlowLayout, UICollec
        
         let imgUrl = baseURL + "uploads/products/" + Prod!.image[indexPath.row]
         
-        backgroundImage.downloaded(from: imgUrl)
+        
+        backgroundImage.sd_setImage(with: URL(string: imgUrl), placeholderImage: UIImage(named: "nikeair"), options: [.continueInBackground, .progressiveLoad])
         backgroundImage.contentMode = .scaleAspectFill
         
         return cell

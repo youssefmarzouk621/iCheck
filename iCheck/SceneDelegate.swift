@@ -39,10 +39,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
         
-        
-        
-        
-        
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

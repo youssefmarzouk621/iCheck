@@ -11,5 +11,5 @@ struct Review:Decodable {
     var _id:String
     var review:String
     var user:Customer
-    var rate:String
+    var rate:Double
 }
