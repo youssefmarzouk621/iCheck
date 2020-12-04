@@ -8,6 +8,7 @@
 import UIKit
 import CoreData
 import Cosmos
+
 class ProductDetailsController: UIViewController {
 
     var Prod:Product?
@@ -25,6 +26,7 @@ class ProductDetailsController: UIViewController {
     
     @IBOutlet weak var Reviews: UITableView!
     
+   
     
     @IBOutlet weak var productImages: UICollectionView! = {
         let layout = UICollectionViewFlowLayout()
@@ -114,6 +116,7 @@ class ProductDetailsController: UIViewController {
         Reviews.dataSource = self
         
         
+        
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let managedContext = appDelegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Connected")
@@ -167,16 +170,15 @@ class ProductDetailsController: UIViewController {
             self.rateValue = rating
         }
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-    }
+    }//end viewDidLoad
+    
+    
+    
+
+
+    
+
+
     
 
 }

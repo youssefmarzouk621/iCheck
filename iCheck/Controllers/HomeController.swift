@@ -51,7 +51,13 @@ class HomeController: UIViewController {
  
     
     @IBAction func seeAllProduct(_ sender: UIButton) {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        performSegue(withIdentifier: "toPostsSegue", sender: sender)
+    }
+    
+    
+    @IBAction func seeAllCategories(_ sender: UIButton) {
+        //logout
+        /*let appDelegate = UIApplication.shared.delegate as! AppDelegate
             
         let managedContext = appDelegate.persistentContainer.viewContext
             
@@ -66,7 +72,7 @@ class HomeController: UIViewController {
             print("deleted connected user")
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
-        }
+        }*/
         performSegue(withIdentifier: "logoutSegue", sender: sender)
     }
     
