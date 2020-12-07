@@ -17,5 +17,5 @@ struct Product :Decodable{
     var address:String
     var available:String
     var rate:Double
-    var reviews:[Review]
+    var reviews:[Review]?
 }

@@ -12,7 +12,7 @@ class LoginController: UIViewController {
     @IBOutlet weak var Email: UITextField!
     @IBOutlet weak var Password: UITextField!
     fileprivate let baseURL = "https://polar-peak-71928.herokuapp.com/"
-    public var connectedUser:Customer = Customer(_id: "", firstName: "", lastName: "", email: "", password: "", phone: "", sexe: "", avatar: "")
+    public var connectedUser:Customer = Customer(_id: "", firstName: "", lastName: "", email: "", password: "", phone: "", sexe: "", avatar: "", favorites: [])
     public var response:backendResponse = backendResponse(message: "")
     
 

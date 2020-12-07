@@ -9,15 +9,23 @@ import UIKit
 import CoreData
 import Cosmos
 
+
+struct productDetails:Decodable {
+    var product:Product
+    var isLiked:String
+}
 class ProductDetailsController: UIViewController {
 
     var Prod:Product?
+    var ProdDetails:productDetails?
+    var FavoritebackResponse:backendResponse = backendResponse(message: "")
     var rateValue:Double=3
-    var connectedUser:Customer = Customer(_id: "notyet", firstName: "", lastName: "", email: "", password: "", phone: "", sexe: "", avatar: "")
+    var isLiked:String="0"
+    var connectedUser:Customer = Customer(_id: "notyet", firstName: "", lastName: "", email: "", password: "", phone: "", sexe: "", avatar: "", favorites: [])
     public var backResponse:backendResponse = backendResponse(message: "")
     fileprivate let baseURL = "https://polar-peak-71928.herokuapp.com/"
-    
-    @IBOutlet weak var moreImages: UIButton!
+
+    @IBOutlet weak var seeAllReviews: UIButton!
     
     @IBOutlet weak var productImage: UIImageView!
     @IBOutlet weak var productName: UILabel!
@@ -26,7 +34,8 @@ class ProductDetailsController: UIViewController {
     
     @IBOutlet weak var Reviews: UITableView!
     
-   
+    @IBOutlet weak var favoriteBtn: UIButton!
+    
     
     @IBOutlet weak var productImages: UICollectionView! = {
         let layout = UICollectionViewFlowLayout()
@@ -37,70 +46,94 @@ class ProductDetailsController: UIViewController {
         return cv
     }()
     
-    
-    
-    @IBAction func moreImagesAction(_ sender: UIButton) {
+    @IBAction func favoriteAction(_ sender: UIButton) {
+
+        if isLiked=="0" {//add favorite
+            isLiked="1"
+            favoriteBtn.setBackgroundImage(UIImage(systemName: "bookmark.fill"), for: .normal)
+            addToFavorite()
+        }else{//delete favorite
+            isLiked="0"
+            favoriteBtn.setBackgroundImage(UIImage(systemName: "bookmark"), for: .normal)
+            deleteFavorite()
+        }
         
     }
     
-    
-    
-    @IBOutlet weak var cosmosRating: CosmosView!
-    @IBOutlet weak var rateDescription: UILabel!
-    @IBOutlet weak var reviewField: UITextField!
-    @IBAction func submitReview(_ sender: UIButton) {
-        let reviewDescription = reviewField.text
-        if reviewDescription == "" {
-            let alert = UIAlertController(title: "review field is empty", message: "please fill your input", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
-            self.present(alert, animated: true)
-        }else{
-   
-            print("prodId :"+self.Prod!._id)
-            print("review :"+reviewDescription!)
-            print("userId :"+connectedUser._id)
-            print("rate :"+String(self.rateValue))
-            
-            
-            
-            
-            
-            let parameters = ["prodId" : self.Prod!._id, "review" : reviewDescription!, "userId" : connectedUser._id, "rate" : String(self.rateValue)]
-            guard let url = URL(string: baseURL+"api/products/addReview") else { return }
-            var request = URLRequest(url: url)
-            request.httpMethod = "POST"
-            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            guard let httpBody = try? JSONSerialization.data(withJSONObject: parameters, options: []) else { return }
-            request.httpBody = httpBody
-            var status = 0
-            URLSession.shared.dataTask(with: request) { (data,response,error) in
-                if error == nil{
-                    do {
-                        self.backResponse = try JSONDecoder().decode(backendResponse.self, from: data!)
-                        let httpResponse = response as? HTTPURLResponse
-                        status = httpResponse!.statusCode
-                    } catch {
-                        print("parse json error")
-                    }
-                    DispatchQueue.main.async {
-                        if status == 200 {
-                            print(self.backResponse)
-                            let brandNew = Review(_id: "", review: reviewDescription!, user: self.connectedUser, rate: self.rateValue)
-                            self.Prod!.reviews.append(brandNew)
-                            self.Reviews.reloadData()
-                            
-                            self.rateDescription.text = "Good"
-                            self.reviewField.text = ""
-                            self.cosmosRating.rating = 3
-                        }
-                    }
+    func addToFavorite() {
+        let parameters = ["prodId" : Prod?._id,"userId" : connectedUser._id]
+        guard let url = URL(string: baseURL+"api/user/addFavorite") else { return }
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        guard let httpBody = try? JSONSerialization.data(withJSONObject: parameters, options: []) else { return }
+        request.httpBody = httpBody
+        URLSession.shared.dataTask(with: request) { (data,response,error) in
+            if error == nil{
+                do {
+                    self.FavoritebackResponse = try JSONDecoder().decode(backendResponse.self, from: data!)
+                } catch {
+                    print("parse backend response json error")
                 }
-            }.resume()
-            
-            
-            
+        
+                DispatchQueue.main.async {
+                }
+            }
+        }.resume()
+    }
+    
+    func deleteFavorite() {
+        let parameters = ["prodId" : Prod?._id,"userId" : connectedUser._id]
+        guard let url = URL(string: baseURL+"api/user/removeFavorite") else { return }
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        guard let httpBody = try? JSONSerialization.data(withJSONObject: parameters, options: []) else { return }
+        request.httpBody = httpBody
+        URLSession.shared.dataTask(with: request) { (data,response,error) in
+            if error == nil{
+                do {
+                    self.FavoritebackResponse = try JSONDecoder().decode(backendResponse.self, from: data!)
+                } catch {
+                    print("parse backend response json error")
+                }
+        
+                DispatchQueue.main.async {
+                }
+            }
+        }.resume()
+    }
+    
+    
+
+    @objc func showMiracle() {
+            let slideVC = RateOverlayController()
+            slideVC.Prod = Prod
+            slideVC.modalPresentationStyle = .custom
+            slideVC.transitioningDelegate = self
+            self.present(slideVC, animated: true, completion: nil)
+        }
+    
+    
+    @IBAction func rateAction(_ sender: UIButton) {
+        showMiracle()
+    }
+    
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+        if segue.identifier=="productReviewsSegue" {
+            let product = Prod
+            let destination = segue.destination as! ProductReviewsController
+            destination.Prod = product
         }
     }
+    
+    @IBAction func seeAllReviews(_ sender: UIButton) {
+        performSegue(withIdentifier: "productReviewsSegue", sender: sender)
+    }
+    
     
     
     
@@ -109,13 +142,16 @@ class ProductDetailsController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         super.hideKeyboardWhenTappedAround()
+        
+        Prod?.reviews = []
+        
         productImages.delegate = self
         productImages.dataSource = self
         
         Reviews.delegate = self
         Reviews.dataSource = self
         
-        
+
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let managedContext = appDelegate.persistentContainer.viewContext
@@ -123,7 +159,6 @@ class ProductDetailsController: UIViewController {
         do {
             let result = try managedContext.fetch(fetchRequest)
             for obj in result {
-                print("getting info from core data")
                 self.connectedUser._id=(obj.value(forKey: "id") as! String)
                 self.connectedUser.firstName=(obj.value(forKey: "firstName") as! String)
                 self.connectedUser.lastName=(obj.value(forKey: "lastName") as! String)
@@ -139,8 +174,39 @@ class ProductDetailsController: UIViewController {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
         
+        let parameters = ["prodId" : Prod?._id,"userId" : connectedUser._id]
+        guard let url = URL(string: baseURL+"api/products/detail") else { return }
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        guard let httpBody = try? JSONSerialization.data(withJSONObject: parameters, options: []) else { return }
+        request.httpBody = httpBody
+        URLSession.shared.dataTask(with: request) { (data,response,error) in
+            if error == nil{
+                do {
+                    self.ProdDetails = try JSONDecoder().decode(productDetails.self, from: data!)
+                    /*let json = try JSONSerialization.jsonObject(with: data!, options: [])
+                    print("before parse")
+                    print(json)*/
+                } catch {
+                    print("parse reviews json error")
+                }
         
-        moreImages.setTitle("See all("+String(Prod!.image.count)+")", for: .normal)
+                DispatchQueue.main.async {
+                    self.Prod = self.ProdDetails?.product
+                    self.isLiked = self.ProdDetails!.isLiked
+                    if(self.isLiked=="1"){
+                        self.favoriteBtn.setBackgroundImage(UIImage(systemName: "bookmark.fill"), for: .normal)
+                    }
+                    self.Reviews.reloadData()
+                    self.seeAllReviews.setTitle("See all("+String(self.Prod!.reviews!.count)+")", for: .normal)
+                }
+            }
+        }.resume()
+        
+        
+        
+        
         
         let productUrl = baseURL + "uploads/products/" + Prod!.image[0]
         
@@ -148,27 +214,6 @@ class ProductDetailsController: UIViewController {
         productImage.contentMode = .scaleAspectFill
         productName.text = Prod!.name
         productDescription.text = Prod!.description
-        
-        cosmosRating.didTouchCosmos = { rating in
-            switch rating {
-            case 1:
-                self.rateDescription.text = "Bad"
-            case 2:
-                self.rateDescription.text = "Okay"
-            case 3:
-                self.rateDescription.text = "Good"
-            case 4:
-                self.rateDescription.text = "Great"
-            case 5:
-                self.rateDescription.text = "Amazing"
-            default:
-                self.rateDescription.text = "Good"
-            }
-            self.rateValue = rating
-        }
-        cosmosRating.didFinishTouchingCosmos = { rating in
-            self.rateValue = rating
-        }
         
     }//end viewDidLoad
     
@@ -186,12 +231,15 @@ class ProductDetailsController: UIViewController {
 
 
 
-
-
 extension ProductDetailsController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        Prod!.reviews.count
+        if Prod!.reviews!.count<3 {
+            return Prod!.reviews!.count
+        }else{
+            return 3
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -205,15 +253,16 @@ extension ProductDetailsController: UITableViewDataSource, UITableViewDelegate {
         
         
         
-        let avatarUrl = baseURL + "uploads/users/" + Prod!.reviews[indexPath.row].user.avatar
+        let avatarUrl = baseURL + "uploads/users/" + Prod!.reviews![indexPath.row].user.avatar
         avatar.sd_setImage(with: URL(string: avatarUrl), placeholderImage: UIImage(named: "nikeair"), options: [.continueInBackground, .progressiveLoad])
 
-        userName.text = Prod!.reviews[indexPath.row].user.firstName+" "+Prod!.reviews[indexPath.row].user.lastName
-        review.text = Prod!.reviews[indexPath.row].review
+        userName.text = Prod!.reviews![indexPath.row].user.firstName+" "+Prod!.reviews![indexPath.row].user.lastName
+        review.text = Prod!.reviews![indexPath.row].review
         
         rateView.layer.cornerRadius = 5
         
-        rating.text = String(Prod!.reviews[indexPath.row].rate)
+        rating.text = String(format: "%.1f", Prod!.reviews![indexPath.row].rate)
+        
         
         return cell!
     }
@@ -258,3 +307,11 @@ extension ProductDetailsController: UICollectionViewDelegateFlowLayout, UICollec
     
 
 }
+
+//extension for bottom sheet
+extension ProductDetailsController: UIViewControllerTransitioningDelegate {
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        RatePresentationController(presentedViewController: presented, presenting: presenting)
+    }
+}
+

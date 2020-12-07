@@ -29,6 +29,8 @@ class ProductsController: UIViewController {
     
     //variables
     fileprivate let baseURL = "https://polar-peak-71928.herokuapp.com/"
+    
+    var fetchedProducts = [Product]()
     var productList = [Product]()
     var categories = [String]()
     
@@ -67,8 +69,22 @@ class ProductsController: UIViewController {
                             }
                         }
                     }
-                    self.filterProducts.reloadData()
-                    self.Products.reloadData()
+                    self.fetchedProducts = self.productList
+                    
+                    self.filterProducts.performBatchUpdates(
+                      {
+                        self.filterProducts.reloadSections(NSIndexSet(index: 0) as IndexSet)
+                      }, completion: { (finished:Bool) -> Void in
+                    })
+                    
+                    self.Products.performBatchUpdates(
+                      {
+                        self.Products.reloadSections(NSIndexSet(index: 0) as IndexSet)
+                      }, completion: { (finished:Bool) -> Void in
+                    })
+                    
+                    //self.filterProducts.reloadData()
+                    //self.Products.reloadData()
                 }
             }
         }.resume()
@@ -157,17 +173,51 @@ extension ProductsController: UICollectionViewDelegateFlowLayout, UICollectionVi
         productImg.contentMode = .scaleAspectFill
         
         let brandUrl = baseURL + "uploads/brands/" + productList[indexPath.row].brand + ".jpg"
-        print("brandUrl :")
-        print(brandUrl)
+        
         brandLogo.sd_setImage(with: URL(string: brandUrl), placeholderImage: UIImage(named: "nikeair"), options: [.continueInBackground, .progressiveLoad])
         brandLogo.contentMode = .scaleAspectFill
         
+        cosmosView.settings.fillMode = .precise
         cosmosView.rating = productList[indexPath.row].rate
         
         productName.text = productList[indexPath.row].name
         productBrand.text = productList[indexPath.row].brand
 
         return cell
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+        if segue.identifier=="prodDetailSegue" {
+            let indexPath = sender as! Int
+            let product = productList[indexPath]
+            let destination = segue.destination as! ProductDetailsController
+            
+            destination.Prod = product
+        }
+
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView==Products {
+            performSegue(withIdentifier: "prodDetailSegue", sender: indexPath.row)
+        }
+        if collectionView==filterProducts {
+            let filter = categories[indexPath.row]
+            
+            let filtered = self.fetchedProducts.filter { product in
+                return product.category==filter
+            }
+            self.productList = filtered
+            
+            self.Products.performBatchUpdates(
+              {
+                self.Products.reloadSections(NSIndexSet(index: 0) as IndexSet)
+              }, completion: { (finished:Bool) -> Void in
+            })
+            
+            //self.Products.reloadData()
+        }
     }
     
     

@@ -24,7 +24,7 @@ class HomeController: UIViewController {
     @IBOutlet weak var categoryName3: UILabel!
    
     fileprivate let baseURL = "https://polar-peak-71928.herokuapp.com/"
-
+    
     var connected:Customer? = nil
     var customers = [Customer]()
     var products = [Product]()
@@ -56,24 +56,7 @@ class HomeController: UIViewController {
     
     
     @IBAction func seeAllCategories(_ sender: UIButton) {
-        //logout
-        /*let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            
-        let managedContext = appDelegate.persistentContainer.viewContext
-            
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Connected")
-            
-        do {
-            let result = try managedContext.fetch(fetchRequest)
-            for obj in result {
-                managedContext.delete(obj)
-            }
-            try managedContext.save()
-            print("deleted connected user")
-        } catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
-        }*/
-        performSegue(withIdentifier: "logoutSegue", sender: sender)
+        
     }
     
     
@@ -99,7 +82,7 @@ class HomeController: UIViewController {
         
         
         
-        let productsUrl = URL(string: baseURL+"api/products/")
+        let productsUrl = URL(string: baseURL+"api/products/trending")
         URLSession.shared.dataTask(with: productsUrl!) { (data,response,error) in
             if error == nil{
 
@@ -109,7 +92,7 @@ class HomeController: UIViewController {
                     print("before parse")
                     print(json)*/
                 } catch {
-                    print("parse json error")
+                    print("parse product json error")
                 }
                 
                 DispatchQueue.main.async {
@@ -160,9 +143,6 @@ extension UIViewController {
 
 
 
-
-
-
 extension HomeController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
     
@@ -170,19 +150,17 @@ extension HomeController: UICollectionViewDelegateFlowLayout, UICollectionViewDa
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
             if collectionView == trendingProducts {
                 return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { suggestedActions in
-                    // Create an action for sharing
-                    let share = UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up")) { action in
+                    
+                    let share = UIAction(title: "Check it", image: UIImage(systemName: "sparkles")) { action in
                         // Show share sheet
                     }
 
-                    // Create an action for copy
-                    let rename = UIAction(title: "Copy", image: UIImage(systemName: "doc.on.doc")) { action in
-                        // Perform copy
+                    let rename = UIAction(title: "Details", image: UIImage(systemName: "arrowshape.turn.up.right")) { action in
+                        self.performSegue(withIdentifier: "prodDetailSegue", sender: indexPath.row)
                     }
 
-                    // Create an action for delete with destructive attributes (highligh in red)
-                    let delete = UIAction(title: "Delete", image: UIImage(systemName: "trash"), attributes: .destructive) { action in
-                        // Perform delete
+                    let delete = UIAction(title: "Reviews", image: UIImage(systemName: "star")) { action in
+                        self.performSegue(withIdentifier: "homeToReviewsSegue", sender: indexPath.row)
                     }
 
                     // Create a UIMenu with all the actions as children
@@ -272,6 +250,13 @@ extension HomeController: UICollectionViewDelegateFlowLayout, UICollectionViewDa
             
             destination.Prod = product
         }
+        if segue.identifier=="homeToReviewsSegue" {
+            let indexPath = sender as! Int
+            let product = products[indexPath]
+            let destination = segue.destination as! ProductReviewsController
+            
+            destination.Prod = product
+        }
 
     }
     
@@ -279,7 +264,6 @@ extension HomeController: UICollectionViewDelegateFlowLayout, UICollectionViewDa
         if collectionView==trendingProducts {
             performSegue(withIdentifier: "prodDetailSegue", sender: indexPath.row)
         }
-        
     }
 }
 

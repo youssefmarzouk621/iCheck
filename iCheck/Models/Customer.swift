@@ -16,6 +16,7 @@ struct Customer:Decodable {
     var phone:String
     var sexe:String
     var avatar:String
+    var favorites:[Favorite]?
     /*var createdAt:Date
     var updatedAt:Date*/
     
