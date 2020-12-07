@@ -10,18 +10,54 @@ import CoreData
 
 
 
-class SignController: UIViewController {
+class SignController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var Lastname: UITextField!
     @IBOutlet weak var Firstname: UITextField!
     @IBOutlet weak var Email: UITextField!
     @IBOutlet weak var Password: UITextField!
     @IBOutlet weak var Confirm: UITextField!
+    @IBOutlet weak var profileImageView: UIImageView!
+    
+    var imagePicker = UIImagePickerController()
+    var networkService = NetworkService()
     
     fileprivate let baseURL = "https://polar-peak-71928.herokuapp.com/"
     public var backResponse:backendResponse = backendResponse(message: "")
     
     @IBAction func UploadAction(_ sender: UIButton) {
+        if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum){
+            
+            imagePicker.delegate = self
+            imagePicker.sourceType = .savedPhotosAlbum
+            imagePicker.allowsEditing = false
+            
+            present(imagePicker, animated: true, completion: nil)
+        }
+    }
+    
+    func uploadImage(with image: UIImage?, completion: (() -> Void)? = nil) {
+        
+        guard let pickedImage = image else {
+            completion?()
+            return
+        }
+
+        networkService.uploadImage(with: pickedImage) {
+            print("success")
+            completion?()
+        } onError: { error in
+            print(error)
+            completion?()
+        }
+        
+    }
+
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        imagePicker.dismiss(animated: true, completion: nil)
+        guard let pickedImage = info[.originalImage] as? UIImage else { return }
+        profileImageView.image = pickedImage
     }
     
     @IBAction func RegisterAction(_ sender: UIButton) {
@@ -75,7 +111,11 @@ class SignController: UIViewController {
                         }else if status == 200 {
                             print(self.backResponse)
                             self.saveConnectedUser()
-                            self.performSegue(withIdentifier: "registerToHomeSegue", sender:sender)
+                            self.uploadImage(with: self.profileImageView.image) {
+                                DispatchQueue.main.async {
+                                    self.performSegue(withIdentifier: "registerToHomeSegue", sender:sender)
+                                }
+                            }
                         }
                     }
                 }

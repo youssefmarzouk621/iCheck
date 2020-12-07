@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -167,9 +167,19 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WQD-NY-8c7">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="amine.mbarki" translatesAutoresizingMaskIntoConstraints="NO" id="N42-ph-0Ul">
+                                <rect key="frame" x="112.5" y="30" width="150" height="150"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="Bj3-us-Vmd"/>
+                                    <constraint firstAttribute="height" constant="150" id="xbg-mg-Ott"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WQD-NY-8c7">
                                 <rect key="frame" x="211" y="145" width="55" height="55"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="55" id="jii-DX-gTd"/>
+                                    <constraint firstAttribute="width" constant="55" id="sLQ-2n-Jjx"/>
+                                </constraints>
                                 <state key="normal" image="upload"/>
                                 <connections>
                                     <action selector="UploadAction:" destination="O3l-fn-Tom" eventType="touchUpInside" id="BpI-IC-BXu"/>
@@ -262,8 +272,14 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="syu-PA-Dir" firstAttribute="bottom" secondItem="x0F-nm-wJj" secondAttribute="bottom" constant="35" id="4Zc-NV-dmT"/>
+                            <constraint firstItem="N42-ph-0Ul" firstAttribute="top" secondItem="syu-PA-Dir" secondAttribute="top" constant="30" id="7oj-iw-PsE"/>
                             <constraint firstItem="x0F-nm-wJj" firstAttribute="leading" secondItem="syu-PA-Dir" secondAttribute="leading" constant="40" id="JNy-tS-Pn8"/>
+                            <constraint firstItem="WQD-NY-8c7" firstAttribute="leading" secondItem="syu-PA-Dir" secondAttribute="leading" constant="211" id="RKU-FE-VDt"/>
+                            <constraint firstItem="N42-ph-0Ul" firstAttribute="centerX" secondItem="syu-PA-Dir" secondAttribute="centerX" id="Uof-ax-cyA"/>
                             <constraint firstItem="syu-PA-Dir" firstAttribute="trailing" secondItem="x0F-nm-wJj" secondAttribute="trailing" constant="40" id="aFh-Yg-snA"/>
+                            <constraint firstItem="h3J-ki-jCY" firstAttribute="top" secondItem="WQD-NY-8c7" secondAttribute="bottom" constant="20" id="bA1-t8-Qd9"/>
+                            <constraint firstItem="WQD-NY-8c7" firstAttribute="top" secondItem="N42-ph-0Ul" secondAttribute="bottom" constant="-35" id="bTa-5O-K40"/>
+                            <constraint firstItem="syu-PA-Dir" firstAttribute="trailing" secondItem="WQD-NY-8c7" secondAttribute="trailing" constant="109" id="eGU-Z7-CM2"/>
                             <constraint firstItem="h3J-ki-jCY" firstAttribute="top" secondItem="syu-PA-Dir" secondAttribute="top" constant="220" id="fKf-4b-kR7"/>
                             <constraint firstItem="h3J-ki-jCY" firstAttribute="leading" secondItem="syu-PA-Dir" secondAttribute="leading" constant="40" id="nLw-yw-prk"/>
                             <constraint firstItem="x0F-nm-wJj" firstAttribute="leading" secondItem="syu-PA-Dir" secondAttribute="leading" constant="40" id="pee-DV-I4N"/>
@@ -278,6 +294,7 @@
                         <outlet property="Firstname" destination="r67-4u-lgf" id="a6x-7Y-WS4"/>
                         <outlet property="Lastname" destination="cw2-El-nyC" id="FwB-L7-SQg"/>
                         <outlet property="Password" destination="Crc-iu-7aj" id="Nox-XL-ayM"/>
+                        <outlet property="profileImageView" destination="N42-ph-0Ul" id="8pb-Pz-kIP"/>
                         <segue destination="RcY-11-p8O" kind="presentation" identifier="registerToHomeSegue" modalPresentationStyle="fullScreen" id="tGr-06-fLy"/>
                     </connections>
                 </viewController>
@@ -1275,6 +1292,7 @@
         <image name="CosmeticCategorie" width="301" height="301"/>
         <image name="Groupe 334" width="889" height="176"/>
         <image name="Rectangle 393" width="301" height="300"/>
+        <image name="amine.mbarki" width="960" height="960"/>
         <image name="bell" catalog="system" width="128" height="124"/>
         <image name="bookmark" catalog="system" width="112" height="128"/>
         <image name="camera.circle" catalog="system" width="128" height="121"/>

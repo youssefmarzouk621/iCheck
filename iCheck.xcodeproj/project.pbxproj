@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		285BFA125ADB8DA7B994ED9F /* Pods_iCheck_iCheckUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E7224EECB43513CC6C8C351 /* Pods_iCheck_iCheckUITests.framework */; };
 		67D3913F9DF378B80ACC760C /* Pods_iCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1B4DB0D2FDA1506CEC42DA6 /* Pods_iCheck.framework */; };
+		7EFF5804257EE92E00CABD5D /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFF5803257EE92E00CABD5D /* NetworkService.swift */; };
 		9400C19DD4BF93E9BD3D0B61 /* Pods_iCheckTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A989CC6593F14C6EFF701571 /* Pods_iCheckTests.framework */; };
 		9C10BA03257EB6DF008F751D /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C10BA02257EB6DF008F751D /* ProfileController.swift */; };
 		9C2E2764256986370008E3FA /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C2E2763256986370008E3FA /* Customer.swift */; };
@@ -60,6 +61,7 @@
 		3E7224EECB43513CC6C8C351 /* Pods_iCheck_iCheckUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iCheck_iCheckUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		55A831F1A24AE060722DB378 /* Pods-iCheck.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iCheck.release.xcconfig"; path = "Target Support Files/Pods-iCheck/Pods-iCheck.release.xcconfig"; sourceTree = "<group>"; };
 		767D8485D704BEE7C4DB1D6A /* Pods-iCheckTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iCheckTests.debug.xcconfig"; path = "Target Support Files/Pods-iCheckTests/Pods-iCheckTests.debug.xcconfig"; sourceTree = "<group>"; };
+		7EFF5803257EE92E00CABD5D /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		9C10BA02257EB6DF008F751D /* ProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
 		9C2E2763256986370008E3FA /* Customer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Customer.swift; sourceTree = "<group>"; };
 		9C2E276B2569C73C0008E3FA /* ProductDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsController.swift; sourceTree = "<group>"; };
@@ -153,6 +155,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		7EFF57FF257EE8F900CABD5D /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				7EFF5803257EE92E00CABD5D /* NetworkService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
 		9C5C0E1C257AF7DE009DD1D3 /* Rate */ = {
 			isa = PBXGroup;
 			children = (
@@ -188,6 +198,7 @@
 		9C7082482567D69200A79D32 /* iCheck */ = {
 			isa = PBXGroup;
 			children = (
+				7EFF57FF257EE8F900CABD5D /* Service */,
 				9C7082A7256869BB00A79D32 /* Models */,
 				9C7082852568009F00A79D32 /* Controllers */,
 				9C70827F2567E50A00A79D32 /* fonts */,
@@ -513,6 +524,7 @@
 				9C7082542567D69200A79D32 /* iCheck.xcdatamodeld in Sources */,
 				9C31BFE5257D194C00C7E127 /* Favorite.swift in Sources */,
 				9C2E2764256986370008E3FA /* Customer.swift in Sources */,
+				7EFF5804257EE92E00CABD5D /* NetworkService.swift in Sources */,
 				9C2E276C2569C73D0008E3FA /* ProductDetailsController.swift in Sources */,
 				9C70824C2567D69200A79D32 /* SceneDelegate.swift in Sources */,
 				9C10BA03257EB6DF008F751D /* ProfileController.swift in Sources */,
