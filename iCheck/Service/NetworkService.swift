@@ -30,8 +30,10 @@ final class NetworkService {
     }
     
     private func makeUploadRequest(with image: UIImage, onSuccess: @escaping () -> (Void), onError: @escaping (Error) -> Void) {
-
-        let fileName = "fileName.png"
+        
+        let randomPattern = Int.random(in: 0...100000)
+        let pattern = "IMG_"+String(randomPattern)+".png"
+        let fileName = pattern
         let paramName = "upload"
 
         // generate boundary string using a unique per-app string

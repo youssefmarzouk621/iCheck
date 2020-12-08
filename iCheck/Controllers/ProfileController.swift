@@ -69,7 +69,10 @@ class ProfileController: UIViewController {
         ProfilePic.layer.cornerRadius = ProfilePic.bounds.width/2
     }
     func getFavorites() {
+        
         let parameters = ["userId" : connectedUser._id]
+        print("paraaaams :")
+        print(parameters)
         guard let url = URL(string: baseURL+"api/user/getFavorite") else { return }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -88,8 +91,6 @@ class ProfileController: UIViewController {
                 }
         
                 DispatchQueue.main.async {
-                    print("couuuuunt :")
-                    print(self.connectedUser.favorites!.count)
                     if !(self.connectedUser.favorites!.count==0){
                         let container = self.productContainer
                         let productImg = container!.viewWithTag(1) as! UIImageView
@@ -129,6 +130,7 @@ class ProfileController: UIViewController {
         Email.text = connectedUser.email
     }
     func getConnectedUser() {
+        
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let managedContext = appDelegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Connected")
@@ -143,7 +145,11 @@ class ProfileController: UIViewController {
                 self.connectedUser.phone=(obj.value(forKey: "phone") as! String)
                 self.connectedUser.sexe=(obj.value(forKey: "sexe") as! String)
                 self.connectedUser.avatar=(obj.value(forKey: "avatar") as! String)
+                print("id connected user :")
+                print(obj.value(forKey: "id") as! String)
             }
+            print("done getting connecteduser")
+            
             
             
         } catch let error as NSError {

@@ -103,13 +103,13 @@ class HomeController: UIViewController {
         
         
         
-        let friendsUrl = URL(string: baseURL+"api/user/")
+        let friendsUrl = URL(string: baseURL+"api/user/friends")
         URLSession.shared.dataTask(with: friendsUrl!) { (data,response,error) in
             if error == nil{
                 do {
                     self.customers = try JSONDecoder().decode([Customer].self, from: data!)
                 } catch {
-                    print("parse json error")
+                    print("parse friends error")
                 }
                 
                 DispatchQueue.main.async {

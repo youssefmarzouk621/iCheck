@@ -110,10 +110,10 @@ class SignController: UIViewController, UIImagePickerControllerDelegate, UINavig
                             self.present(alert, animated: true)
                         }else if status == 200 {
                             print(self.backResponse)
-                            self.saveConnectedUser()
+                            //self.saveConnectedUser()
                             self.uploadImage(with: self.profileImageView.image) {
                                 DispatchQueue.main.async {
-                                    self.performSegue(withIdentifier: "registerToHomeSegue", sender:sender)
+                                    self.performSegue(withIdentifier: "returnToLogin", sender:sender)
                                 }
                             }
                         }

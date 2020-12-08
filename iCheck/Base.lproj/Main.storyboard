@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -296,11 +296,12 @@
                         <outlet property="Password" destination="Crc-iu-7aj" id="Nox-XL-ayM"/>
                         <outlet property="profileImageView" destination="N42-ph-0Ul" id="8pb-Pz-kIP"/>
                         <segue destination="RcY-11-p8O" kind="presentation" identifier="registerToHomeSegue" modalPresentationStyle="fullScreen" id="tGr-06-fLy"/>
+                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="returnToLogin" modalPresentationStyle="fullScreen" id="LJ6-Ek-Akq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J8V-qs-R9J" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-671" y="993"/>
+            <point key="canvasLocation" x="-671" y="973"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="OMe-3F-ujo">
@@ -1287,6 +1288,7 @@
         <segue reference="tGr-06-fLy"/>
         <segue reference="TZY-ep-EQe"/>
         <segue reference="Du5-6y-BdY"/>
+        <segue reference="LJ6-Ek-Akq"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="CosmeticCategorie" width="301" height="301"/>
