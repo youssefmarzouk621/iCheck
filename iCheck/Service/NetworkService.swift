@@ -7,11 +7,14 @@ enum NetworkError: Error {
     case imageError
 }
 
+struct avatarResponse : Decodable {
+    var avatar:String
+}
 import Foundation
 
 final class NetworkService {
     private let session: URLSession
-    
+    var avatarRes:avatarResponse=avatarResponse(avatar: "")
     private var baseURL: URL {
         return URL(string: "https://polar-peak-71928.herokuapp.com/api/user/")!
     }
@@ -25,11 +28,11 @@ final class NetworkService {
     }
     
     
-    func uploadImage(with image: UIImage,  onSuccess: @escaping () -> (Void), onError: @escaping (Error) -> Void) {
+    func uploadImage(with image: UIImage,  onSuccess: @escaping (String) -> (Void), onError: @escaping (Error) -> Void) {
         makeUploadRequest(with: image, onSuccess: onSuccess, onError: onError)
     }
     
-    private func makeUploadRequest(with image: UIImage, onSuccess: @escaping () -> (Void), onError: @escaping (Error) -> Void) {
+    private func makeUploadRequest(with image: UIImage, onSuccess: @escaping (String) -> (Void), onError: @escaping (Error) -> Void) {
         
         let randomPattern = Int.random(in: 0...100000)
         let pattern = "IMG_"+String(randomPattern)+".png"
@@ -63,9 +66,8 @@ final class NetworkService {
         session.uploadTask(with: urlRequest, from: data, completionHandler: { responseData, response, error in
             if error == nil {
                 let jsonData = try? JSONSerialization.jsonObject(with: responseData!, options: .allowFragments)
-                if let json = jsonData as? [String: Any] {
-                    print(json)
-                    onSuccess()
+                if let json = jsonData as? [String: String] {
+                    onSuccess(json.values.first!)
                 }
             } else {
                 onError(error!)

@@ -67,12 +67,11 @@ class ProfileController: UIViewController {
         logoutBtn.layer.cornerRadius = 5
         
         ProfilePic.layer.cornerRadius = ProfilePic.bounds.width/2
+        ProfilePic.contentMode = .scaleAspectFill
     }
     func getFavorites() {
         
         let parameters = ["userId" : connectedUser._id]
-        print("paraaaams :")
-        print(parameters)
         guard let url = URL(string: baseURL+"api/user/getFavorite") else { return }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -83,9 +82,6 @@ class ProfileController: UIViewController {
             if error == nil{
                 do {
                     self.connectedUser = try JSONDecoder().decode(Customer.self, from: data!)
-                    /*let json = try JSONSerialization.jsonObject(with: data!, options: [])
-                    print("before parse")
-                    print(json)*/
                 } catch {
                     print("parse profile customer error")
                 }
@@ -145,10 +141,7 @@ class ProfileController: UIViewController {
                 self.connectedUser.phone=(obj.value(forKey: "phone") as! String)
                 self.connectedUser.sexe=(obj.value(forKey: "sexe") as! String)
                 self.connectedUser.avatar=(obj.value(forKey: "avatar") as! String)
-                print("id connected user :")
-                print(obj.value(forKey: "id") as! String)
             }
-            print("done getting connecteduser")
             
             
             

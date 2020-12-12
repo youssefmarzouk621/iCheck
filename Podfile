@@ -8,6 +8,7 @@ target 'iCheck' do
   # Pods for iCheck
   pod 'Cosmos'
   pod 'SDWebImage'
+  pod 'MessageKit'
 
   target 'iCheckTests' do
     inherit! :search_paths

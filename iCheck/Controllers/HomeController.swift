@@ -12,7 +12,7 @@ import CoreData
 
 class HomeController: UIViewController {
 
-    @IBOutlet weak var Search: UITextField!
+    @IBOutlet weak var Search: UISearchBar!
     
     @IBOutlet weak var Category1: UIImageView!
     @IBOutlet weak var categoryName1: UILabel!
@@ -60,6 +60,20 @@ class HomeController: UIViewController {
     }
     
     
+    @IBAction func seeAllFriends(_ sender: UIButton) {
+        performSegue(withIdentifier: "chatBotSegue", sender: sender)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
@@ -75,10 +89,10 @@ class HomeController: UIViewController {
         Friends.delegate = self
         Friends.dataSource = self
         
-        Search.layer.masksToBounds = true
+        /*Search.layer.masksToBounds = true
         Search.layer.borderWidth = 1
         Search.layer.borderColor = UIColor(red: 55/255, green: 59/255, blue: 100/255, alpha: 1).cgColor
-        Search.layer.cornerRadius = 5
+        Search.layer.cornerRadius = 5*/
         
         
         

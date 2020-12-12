@@ -34,10 +34,14 @@
 		9C7082942568105900A79D32 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7082932568105900A79D32 /* HomeController.swift */; };
 		9C7082A9256869F200A79D32 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7082A8256869F100A79D32 /* Product.swift */; };
 		9C72FC1B257BBAE300D792C4 /* ProductReviewsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C72FC1A257BBAE300D792C4 /* ProductReviewsController.swift */; };
+		9C902BC52583F4A800ED1A9A /* OneTimeCodeTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C902BC42583F4A800ED1A9A /* OneTimeCodeTextField.swift */; };
+		9C902BCA2583F5B800ED1A9A /* VerificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C902BC92583F5B800ED1A9A /* VerificationController.swift */; };
 		9C920F2B25710FE10052D4DE /* netService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C920F2A25710FE10052D4DE /* netService.swift */; };
 		9CAF00C5257436B0008A8FAE /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CAF00C4257436B0008A8FAE /* Review.swift */; };
 		9CAF00D525746549008A8FAE /* RateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CAF00D425746549008A8FAE /* RateController.swift */; };
 		9CAF00DA25747C35008A8FAE /* backendResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CAF00D925747C35008A8FAE /* backendResponse.swift */; };
+		9CEBEE15258504D10055C835 /* HomeTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEBEE14258504D10055C835 /* HomeTabController.swift */; };
+		9CEBEE25258522F80055C835 /* ChatBotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEBEE24258522F80055C835 /* ChatBotController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,11 +95,15 @@
 		9C7082932568105900A79D32 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 		9C7082A8256869F100A79D32 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		9C72FC1A257BBAE300D792C4 /* ProductReviewsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductReviewsController.swift; sourceTree = "<group>"; };
+		9C902BC42583F4A800ED1A9A /* OneTimeCodeTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneTimeCodeTextField.swift; sourceTree = "<group>"; };
+		9C902BC92583F5B800ED1A9A /* VerificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationController.swift; sourceTree = "<group>"; };
 		9C920F2A25710FE10052D4DE /* netService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = netService.swift; sourceTree = "<group>"; };
 		9CAF00C4257436B0008A8FAE /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
 		9CAF00D425746549008A8FAE /* RateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateController.swift; sourceTree = "<group>"; };
 		9CAF00D925747C35008A8FAE /* backendResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = backendResponse.swift; sourceTree = "<group>"; };
 		9CD158862576A89300766AA2 /* iCheck-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "iCheck-Bridging-Header.h"; sourceTree = "<group>"; };
+		9CEBEE14258504D10055C835 /* HomeTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabController.swift; sourceTree = "<group>"; };
+		9CEBEE24258522F80055C835 /* ChatBotController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBotController.swift; sourceTree = "<group>"; };
 		A989CC6593F14C6EFF701571 /* Pods_iCheckTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iCheckTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BADBEB3B07A0E2739CF774E8 /* Pods-iCheck-iCheckUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iCheck-iCheckUITests.debug.xcconfig"; path = "Target Support Files/Pods-iCheck-iCheckUITests/Pods-iCheck-iCheckUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		BF94F661DDDB968A5A593760 /* Pods-iCheckTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iCheckTests.release.xcconfig"; path = "Target Support Files/Pods-iCheckTests/Pods-iCheckTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -159,6 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				7EFF5803257EE92E00CABD5D /* NetworkService.swift */,
+				9C902BC42583F4A800ED1A9A /* OneTimeCodeTextField.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -254,6 +263,9 @@
 				9C53FC9925799418000A6F3B /* ProductsController.swift */,
 				9C72FC1A257BBAE300D792C4 /* ProductReviewsController.swift */,
 				9C10BA02257EB6DF008F751D /* ProfileController.swift */,
+				9C902BC92583F5B800ED1A9A /* VerificationController.swift */,
+				9CEBEE14258504D10055C835 /* HomeTabController.swift */,
+				9CEBEE24258522F80055C835 /* ChatBotController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -517,9 +529,12 @@
 				9C72FC1B257BBAE300D792C4 /* ProductReviewsController.swift in Sources */,
 				9C70824A2567D69200A79D32 /* AppDelegate.swift in Sources */,
 				9C5C0E3C257AFF07009DD1D3 /* RateOverlayController.swift in Sources */,
+				9C902BC52583F4A800ED1A9A /* OneTimeCodeTextField.swift in Sources */,
+				9CEBEE25258522F80055C835 /* ChatBotController.swift in Sources */,
 				9C7082942568105900A79D32 /* HomeController.swift in Sources */,
 				9C53FC9A25799418000A6F3B /* ProductsController.swift in Sources */,
 				9CAF00C5257436B0008A8FAE /* Review.swift in Sources */,
+				9C902BCA2583F5B800ED1A9A /* VerificationController.swift in Sources */,
 				9CAF00D525746549008A8FAE /* RateController.swift in Sources */,
 				9C7082542567D69200A79D32 /* iCheck.xcdatamodeld in Sources */,
 				9C31BFE5257D194C00C7E127 /* Favorite.swift in Sources */,
@@ -531,6 +546,7 @@
 				9C70828F2568043400A79D32 /* SignController.swift in Sources */,
 				9C7082872568012600A79D32 /* LoginController.swift in Sources */,
 				9C5C0E1E257AF80B009DD1D3 /* RatePresentationController.swift in Sources */,
+				9CEBEE15258504D10055C835 /* HomeTabController.swift in Sources */,
 				9CAF00DA25747C35008A8FAE /* backendResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
