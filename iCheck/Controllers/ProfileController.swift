@@ -67,8 +67,10 @@ class ProfileController: UIViewController {
         logoutBtn.layer.cornerRadius = 5
         
         ProfilePic.layer.cornerRadius = ProfilePic.bounds.width/2
+        ProfilePic.contentMode = .scaleAspectFill
     }
     func getFavorites() {
+        
         let parameters = ["userId" : connectedUser._id]
         guard let url = URL(string: baseURL+"api/user/getFavorite") else { return }
         var request = URLRequest(url: url)
@@ -80,16 +82,11 @@ class ProfileController: UIViewController {
             if error == nil{
                 do {
                     self.connectedUser = try JSONDecoder().decode(Customer.self, from: data!)
-                    /*let json = try JSONSerialization.jsonObject(with: data!, options: [])
-                    print("before parse")
-                    print(json)*/
                 } catch {
                     print("parse profile customer error")
                 }
         
                 DispatchQueue.main.async {
-                    print("couuuuunt :")
-                    print(self.connectedUser.favorites!.count)
                     if !(self.connectedUser.favorites!.count==0){
                         let container = self.productContainer
                         let productImg = container!.viewWithTag(1) as! UIImageView
@@ -129,6 +126,7 @@ class ProfileController: UIViewController {
         Email.text = connectedUser.email
     }
     func getConnectedUser() {
+        
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let managedContext = appDelegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Connected")
@@ -144,6 +142,7 @@ class ProfileController: UIViewController {
                 self.connectedUser.sexe=(obj.value(forKey: "sexe") as! String)
                 self.connectedUser.avatar=(obj.value(forKey: "avatar") as! String)
             }
+            
             
             
         } catch let error as NSError {

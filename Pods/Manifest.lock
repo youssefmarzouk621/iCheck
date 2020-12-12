@@ -1,22 +1,32 @@
 PODS:
   - Cosmos (23.0.0)
+  - InputBarAccessoryView (4.3.3):
+    - InputBarAccessoryView/Core (= 4.3.3)
+  - InputBarAccessoryView/Core (4.3.3)
+  - MessageKit (3.1.0):
+    - InputBarAccessoryView (~> 4.3.0)
   - SDWebImage (5.10.0):
     - SDWebImage/Core (= 5.10.0)
   - SDWebImage/Core (5.10.0)
 
 DEPENDENCIES:
   - Cosmos
+  - MessageKit
   - SDWebImage
 
 SPEC REPOS:
   trunk:
     - Cosmos
+    - InputBarAccessoryView
+    - MessageKit
     - SDWebImage
 
 SPEC CHECKSUMS:
   Cosmos: b5c6a9a637e28a061b54c8f8b1d8529d7d4db73f
+  InputBarAccessoryView: 8e7fc09e9cba75e0fee5da13450e15c194806f69
+  MessageKit: 3beb578737a5aa2bba25cc27c7b6d6faa09af5a7
   SDWebImage: 9169792e9eec3e45bba2a0c02f74bf8bd922d1ee
 
-PODFILE CHECKSUM: cd0ee4046734c65927da303cf0c9f0b8ae7e35be
+PODFILE CHECKSUM: 3ff7e4d9cf3c6b85a20aa440f81379041c7572bd
 
 COCOAPODS: 1.10.0

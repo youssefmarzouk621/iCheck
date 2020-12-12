@@ -48,7 +48,7 @@ class LoginController: UIViewController {
             URLSession.shared.dataTask(with: request) { (data,response,error) in
                 if error == nil{
                     do {
-                        //self.connectedUser = try JSONDecoder().decode(Customer.self, from: data!)
+                        
                         let httpResponse = response as? HTTPURLResponse
                         status = httpResponse!.statusCode
                         if !(status==200) {
@@ -58,8 +58,6 @@ class LoginController: UIViewController {
                             self.connectedUser = try JSONDecoder().decode(Customer.self, from: data!)
                             print("serialize user")
                         }
-                        /*var json = try JSONSerialization.jsonObject(with: data!, options: [])
-                        print(json)*/
                         
                     } catch {
                         print("parse json error")
@@ -68,12 +66,15 @@ class LoginController: UIViewController {
                     DispatchQueue.main.async {
                         
                         if status == 202 {
-                            
                             let alert = UIAlertController(title: "User does not exist", message: "check your inputs", preferredStyle: .alert)
                             alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
                             self.present(alert, animated: true)
                         }else if status == 201 {
                             let alert = UIAlertController(title: "Incorrect password", message: "check your inputs", preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
+                            self.present(alert, animated: true)
+                        }else if status == 203 {
+                            let alert = UIAlertController(title: "Account not verified", message: "please verify your email address", preferredStyle: .alert)
                             alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
                             self.present(alert, animated: true)
                         }else if status == 200 {
@@ -113,13 +114,13 @@ class LoginController: UIViewController {
         
         do {
             try managedContext.save()
-            print("saved");
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
         }
     }
     
     @IBAction func toSignin(_ sender: UIButton) {
+        print("tosignin")
         performSegue(withIdentifier: "LoginToSignSegue", sender:sender)
     }
     

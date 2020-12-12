@@ -10,18 +10,59 @@ import CoreData
 
 
 
-class SignController: UIViewController {
+class SignController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var Lastname: UITextField!
     @IBOutlet weak var Firstname: UITextField!
     @IBOutlet weak var Email: UITextField!
     @IBOutlet weak var Password: UITextField!
     @IBOutlet weak var Confirm: UITextField!
+    @IBOutlet weak var profileImageView: UIImageView!
     
+    var imagePicker = UIImagePickerController()
+    var networkService = NetworkService()
+    var returnedAvatar:String="default"
     fileprivate let baseURL = "https://polar-peak-71928.herokuapp.com/"
     public var backResponse:backendResponse = backendResponse(message: "")
     
+
+    
+
+    
+
     @IBAction func UploadAction(_ sender: UIButton) {
+        if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum){
+            
+            imagePicker.delegate = self
+            imagePicker.sourceType = .savedPhotosAlbum
+            imagePicker.allowsEditing = false
+            
+            present(imagePicker, animated: true, completion: nil)
+        }
+    }
+    
+    func uploadImage(with image: UIImage?, completion: (() -> Void)? = nil) {
+        
+        guard let pickedImage = image else {
+            completion?()
+            return
+        }
+
+        networkService.uploadImage(with: pickedImage) {avatar in
+            self.returnedAvatar=avatar
+            completion?()
+        } onError: { error in
+            print(error)
+            completion?()
+        }
+        
+    }
+
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        imagePicker.dismiss(animated: true, completion: nil)
+        guard let pickedImage = info[.originalImage] as? UIImage else { return }
+        profileImageView.image = pickedImage
     }
     
     @IBAction func RegisterAction(_ sender: UIButton) {
@@ -73,9 +114,11 @@ class SignController: UIViewController {
                             alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
                             self.present(alert, animated: true)
                         }else if status == 200 {
-                            print(self.backResponse)
-                            self.saveConnectedUser()
-                            self.performSegue(withIdentifier: "registerToHomeSegue", sender:sender)
+                            self.uploadImage(with: self.profileImageView.image) {
+                                DispatchQueue.main.async {
+                                    self.updateUserAvatar(message: self.returnedAvatar)
+                                }
+                            }
                         }
                     }
                 }
@@ -83,33 +126,47 @@ class SignController: UIViewController {
         }
     }
     
-    
-    
-    func saveConnectedUser() -> Void {
-        
-        let appD = UIApplication.shared.delegate as! AppDelegate
-        let PC = appD.persistentContainer
-        let managedContext = PC.viewContext
-        let entity = NSEntityDescription.entity(forEntityName: "Connected",in: managedContext)!
-        let object = NSManagedObject(entity: entity,insertInto: managedContext)
-        
-        
-        object.setValue(self.Firstname.text, forKey: "firstName")
-        object.setValue(self.Lastname.text, forKey: "lastName")
-        object.setValue(self.Email.text, forKey: "email")
-                
-        
-        do {
-            try managedContext.save()
-            print("saved");
-        } catch let error as NSError {
-            print("Could not save. \(error), \(error.userInfo)")
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "verificationSegue" {
+            let destination = segue.destination as! VerificationController
+            destination.userMail = self.Email.text!
+            destination.userName = self.Firstname.text!+" "+self.Lastname.text!
         }
     }
+    
+    func updateUserAvatar(message:String) {
+        let emailValue=Email.text
+        let parameters = ["avatar" : message,"email" : emailValue]
+        guard let url = URL(string: baseURL+"api/user/updateAvatar") else { return }
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        guard let httpBody = try? JSONSerialization.data(withJSONObject: parameters, options: []) else { return }
+        request.httpBody = httpBody
+        URLSession.shared.dataTask(with: request) { (data,response,error) in
+            if error == nil{
+                do {
+                    self.backResponse = try JSONDecoder().decode(backendResponse.self, from: data!)
+                } catch {
+                    print("parse profile customer error")
+                }
+        
+                DispatchQueue.main.async {
+                    print(self.backResponse.message)
+                    self.performSegue(withIdentifier: "verificationSegue", sender:"sender")
+                }
+            }
+        }.resume()
+    }
+    
+    
+    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         super.hideKeyboardWhenTappedAround()
+        profileImageView.layer.cornerRadius = profileImageView.bounds.width/2
     }
     
 
