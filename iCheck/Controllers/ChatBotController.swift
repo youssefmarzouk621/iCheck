@@ -30,14 +30,13 @@ class ChatBotController: MessagesViewController,MessagesDataSource,MessagesLayou
     let iCheckBot = Sender(senderId: "iCheckBot", displayName: "iCheckBot")
     fileprivate let baseURL = "https://polar-peak-71928.herokuapp.com/"
     
-    var connectedUser:Customer = Customer(_id: "notyet", firstName: "", lastName: "", email: "", password: "", phone: "", sexe: "", avatar: "", favorites: [])
+    var connectedUser:Customer = Customer(_id: "", firstName: "", lastName: "", email: "", password: "", phone: "", sexe: "", avatar: "", favorites: [])
     var messages:[MessageType] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         getConnectedUser()
         setupMessages()
-        
         
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
@@ -50,6 +49,7 @@ class ChatBotController: MessagesViewController,MessagesDataSource,MessagesLayou
         }
         
     }
+    
     
 
     func getConnectedUser() {

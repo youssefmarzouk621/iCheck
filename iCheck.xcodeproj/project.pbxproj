@@ -12,6 +12,7 @@
 		7EFF5804257EE92E00CABD5D /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFF5803257EE92E00CABD5D /* NetworkService.swift */; };
 		9400C19DD4BF93E9BD3D0B61 /* Pods_iCheckTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A989CC6593F14C6EFF701571 /* Pods_iCheckTests.framework */; };
 		9C10BA03257EB6DF008F751D /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C10BA02257EB6DF008F751D /* ProfileController.swift */; };
+		9C2756D52586B535003FF076 /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C2756D42586B534003FF076 /* SearchController.swift */; };
 		9C2E2764256986370008E3FA /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C2E2763256986370008E3FA /* Customer.swift */; };
 		9C2E276C2569C73D0008E3FA /* ProductDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C2E276B2569C73C0008E3FA /* ProductDetailsController.swift */; };
 		9C31BFE5257D194C00C7E127 /* Favorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C31BFE4257D194C00C7E127 /* Favorite.swift */; };
@@ -42,6 +43,7 @@
 		9CAF00DA25747C35008A8FAE /* backendResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CAF00D925747C35008A8FAE /* backendResponse.swift */; };
 		9CEBEE15258504D10055C835 /* HomeTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEBEE14258504D10055C835 /* HomeTabController.swift */; };
 		9CEBEE25258522F80055C835 /* ChatBotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEBEE24258522F80055C835 /* ChatBotController.swift */; };
+		9CEBEE2A2585A8320055C835 /* FavoriteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEBEE292585A8320055C835 /* FavoriteController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +69,7 @@
 		767D8485D704BEE7C4DB1D6A /* Pods-iCheckTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iCheckTests.debug.xcconfig"; path = "Target Support Files/Pods-iCheckTests/Pods-iCheckTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7EFF5803257EE92E00CABD5D /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		9C10BA02257EB6DF008F751D /* ProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
+		9C2756D42586B534003FF076 /* SearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
 		9C2E2763256986370008E3FA /* Customer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Customer.swift; sourceTree = "<group>"; };
 		9C2E276B2569C73C0008E3FA /* ProductDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsController.swift; sourceTree = "<group>"; };
 		9C31BFE4257D194C00C7E127 /* Favorite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorite.swift; sourceTree = "<group>"; };
@@ -104,6 +107,7 @@
 		9CD158862576A89300766AA2 /* iCheck-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "iCheck-Bridging-Header.h"; sourceTree = "<group>"; };
 		9CEBEE14258504D10055C835 /* HomeTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabController.swift; sourceTree = "<group>"; };
 		9CEBEE24258522F80055C835 /* ChatBotController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBotController.swift; sourceTree = "<group>"; };
+		9CEBEE292585A8320055C835 /* FavoriteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteController.swift; sourceTree = "<group>"; };
 		A989CC6593F14C6EFF701571 /* Pods_iCheckTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iCheckTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BADBEB3B07A0E2739CF774E8 /* Pods-iCheck-iCheckUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iCheck-iCheckUITests.debug.xcconfig"; path = "Target Support Files/Pods-iCheck-iCheckUITests/Pods-iCheck-iCheckUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		BF94F661DDDB968A5A593760 /* Pods-iCheckTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iCheckTests.release.xcconfig"; path = "Target Support Files/Pods-iCheckTests/Pods-iCheckTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -266,6 +270,8 @@
 				9C902BC92583F5B800ED1A9A /* VerificationController.swift */,
 				9CEBEE14258504D10055C835 /* HomeTabController.swift */,
 				9CEBEE24258522F80055C835 /* ChatBotController.swift */,
+				9CEBEE292585A8320055C835 /* FavoriteController.swift */,
+				9C2756D42586B534003FF076 /* SearchController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -530,6 +536,7 @@
 				9C70824A2567D69200A79D32 /* AppDelegate.swift in Sources */,
 				9C5C0E3C257AFF07009DD1D3 /* RateOverlayController.swift in Sources */,
 				9C902BC52583F4A800ED1A9A /* OneTimeCodeTextField.swift in Sources */,
+				9C2756D52586B535003FF076 /* SearchController.swift in Sources */,
 				9CEBEE25258522F80055C835 /* ChatBotController.swift in Sources */,
 				9C7082942568105900A79D32 /* HomeController.swift in Sources */,
 				9C53FC9A25799418000A6F3B /* ProductsController.swift in Sources */,
@@ -540,6 +547,7 @@
 				9C31BFE5257D194C00C7E127 /* Favorite.swift in Sources */,
 				9C2E2764256986370008E3FA /* Customer.swift in Sources */,
 				7EFF5804257EE92E00CABD5D /* NetworkService.swift in Sources */,
+				9CEBEE2A2585A8320055C835 /* FavoriteController.swift in Sources */,
 				9C2E276C2569C73D0008E3FA /* ProductDetailsController.swift in Sources */,
 				9C70824C2567D69200A79D32 /* SceneDelegate.swift in Sources */,
 				9C10BA03257EB6DF008F751D /* ProfileController.swift in Sources */,
@@ -732,7 +740,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Spark.iCheck;
+				PRODUCT_BUNDLE_IDENTIFIER = Sparkles.iCheck;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "iCheck-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -755,7 +763,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Spark.iCheck;
+				PRODUCT_BUNDLE_IDENTIFIER = Sparkles.iCheck;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "iCheck-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
