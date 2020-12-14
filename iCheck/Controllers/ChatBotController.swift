@@ -38,7 +38,6 @@ class ChatBotController: MessagesViewController,MessagesDataSource,MessagesLayou
         getConnectedUser()
         setupMessages()
         
-        
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
@@ -50,6 +49,7 @@ class ChatBotController: MessagesViewController,MessagesDataSource,MessagesLayou
         }
         
     }
+    
     
 
     func getConnectedUser() {

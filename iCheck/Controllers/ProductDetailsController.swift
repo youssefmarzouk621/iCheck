@@ -142,7 +142,6 @@ class ProductDetailsController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         super.hideKeyboardWhenTappedAround()
-        
         Prod?.reviews = []
         
         productImages.delegate = self

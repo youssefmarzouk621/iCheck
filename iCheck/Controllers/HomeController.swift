@@ -10,7 +10,7 @@ import CoreData
 
 
 
-class HomeController: UIViewController {
+class HomeController: UIViewController, UISearchBarDelegate {
 
     @IBOutlet weak var Search: UISearchBar!
     
@@ -66,17 +66,28 @@ class HomeController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        Search.endEditing(true)
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        Search.endEditing(true)
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        if searchBar==Search {
+            self.tabBarController?.selectedIndex = 2
+        }
+        
+        //self.present(UINavigationController(rootViewController: SearchViewController()), animated: false, completion: nil)
+        
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
+        Search.delegate = self
         
         
         
