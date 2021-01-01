@@ -50,7 +50,6 @@ class ProductsController: UIViewController {
         let productsUrl = URL(string: baseURL+"api/products/")
         URLSession.shared.dataTask(with: productsUrl!) { (data,response,error) in
             if error == nil{
-
                 do {
                     self.productList = try JSONDecoder().decode([Product].self, from: data!)
                 } catch {
@@ -58,14 +57,13 @@ class ProductsController: UIViewController {
                 }
                 
                 DispatchQueue.main.async {
+                    
                     for product in self.productList {
                         if self.categories.isEmpty {
                             self.categories.append(product.category)
                         }else{
-                            for category in self.categories {
-                                if !(product.category==category) {
-                                    self.categories.append(product.category)
-                                }
+                            if !(self.categories.contains(product.category)) {
+                                self.categories.append(product.category)
                             }
                         }
                     }

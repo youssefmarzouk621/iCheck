@@ -135,12 +135,16 @@ class ProductDetailsController: UIViewController {
     }
     
     
+    @IBAction func arView(_ sender: UIButton) {
+        performSegue(withIdentifier: "arSegue", sender: sender)
+    }
     
     
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         super.hideKeyboardWhenTappedAround()
         Prod?.reviews = []
         

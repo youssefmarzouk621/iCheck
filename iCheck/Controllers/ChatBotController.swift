@@ -25,6 +25,12 @@ struct Message:MessageType {
 
 
 class ChatBotController: MessagesViewController,MessagesDataSource,MessagesLayoutDelegate,MessagesDisplayDelegate {
+    func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {
+        return messages[indexPath.section]
+    }
+    
+    
+
 
     let connected = Sender(senderId: "connected", displayName: "Youssef Marzouk")
     let iCheckBot = Sender(senderId: "iCheckBot", displayName: "iCheckBot")
@@ -74,18 +80,15 @@ class ChatBotController: MessagesViewController,MessagesDataSource,MessagesLayou
     }
     
     func setupMessages() {
-        messages.append(Message(sender: iCheckBot, messageId: "1", sentDate: Date().addingTimeInterval(-86400), kind: .text("Hello world Hello world Hello world Hello world Hello world Hello world Hello world")))
-        messages.append(Message(sender: connected, messageId: "2", sentDate: Date().addingTimeInterval(-76400), kind: .text("Hello world")))
-        messages.append(Message(sender: iCheckBot, messageId: "4", sentDate: Date().addingTimeInterval(-56400), kind: .text("Hello world")))
+        messages.append(Message(sender: iCheckBot, messageId: "1", sentDate: Date().addingTimeInterval(-86400), kind: .text("Bonjour")))
+        messages.append(Message(sender: connected, messageId: "2", sentDate: Date().addingTimeInterval(-76400), kind: .text("wakteh validation ?")))
     }
     
     func currentSender() -> SenderType {
         return connected
     }
     
-    func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {
-        return messages[indexPath.section]
-    }
+
     
     
     func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int {
@@ -97,7 +100,6 @@ class ChatBotController: MessagesViewController,MessagesDataSource,MessagesLayou
             let avatarUrl = baseURL + "uploads/users/" + self.connectedUser.avatar
             avatarView.sd_setImage(with: URL(string: avatarUrl), placeholderImage: UIImage(systemName: "person"), options: [.continueInBackground, .progressiveLoad])
         }
-        
     }
     
     func insertMessage(_ message: Message) {

@@ -22,7 +22,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let result = try managedContext.fetch(fetchRequest)
             
             if result.isEmpty {//login controller
-                print("no user in core")
                 guard let _ = (scene as? UIWindowScene) else { return }
             }else{
                 print("found user")//home controller

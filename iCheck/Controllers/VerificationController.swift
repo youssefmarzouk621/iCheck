@@ -113,6 +113,9 @@ class VerificationController: UIViewController {
                 
                 DispatchQueue.main.async {
                     print(self.backResponse.message)
+                    let alert = UIAlertController(title: "verification code", message: String(self.generatedCode), preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
+                    self.present(alert, animated: true)
                 }
             }
         }.resume()

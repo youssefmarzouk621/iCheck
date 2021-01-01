@@ -16,11 +16,14 @@ class HomeController: UIViewController, UISearchBarDelegate {
     
     @IBOutlet weak var Category1: UIImageView!
     @IBOutlet weak var categoryName1: UILabel!
+    @IBOutlet weak var filterCategory1: UIImageView!
     
     @IBOutlet weak var Category2: UIImageView!
+    @IBOutlet weak var filterCategory2: UIImageView!
     @IBOutlet weak var categoryName2: UILabel!
     
     @IBOutlet weak var Category3: UIImageView!
+    @IBOutlet weak var filterCategory3: UIImageView!
     @IBOutlet weak var categoryName3: UILabel!
    
     fileprivate let baseURL = "https://polar-peak-71928.herokuapp.com/"
@@ -28,7 +31,7 @@ class HomeController: UIViewController, UISearchBarDelegate {
     var connected:Customer? = nil
     var customers = [Customer]()
     var products = [Product]()
-    
+    var categories = [Category]()
 
     @IBOutlet weak var trendingProducts: UICollectionView! = {
         let layout = UICollectionViewFlowLayout()
@@ -84,22 +87,52 @@ class HomeController: UIViewController, UISearchBarDelegate {
         //self.present(UINavigationController(rootViewController: SearchViewController()), animated: false, completion: nil)
         
     }
+    
+    func getCategories() -> Void {
+        let productsUrl = URL(string: baseURL+"api/categories/")
+        URLSession.shared.dataTask(with: productsUrl!) { (data,response,error) in
+            if error == nil{
+                do {
+                    self.categories = try JSONDecoder().decode([Category].self, from: data!)
+                } catch {
+                    print("parse category error")
+                }
+                
+                DispatchQueue.main.async {
+                    print(self.categories)
+                    let category1Url = self.baseURL + "uploads/categories/" + self.categories[0].image
+                    let category2Url = self.baseURL + "uploads/categories/" + self.categories[1].image
+                    let category3Url = self.baseURL + "uploads/categories/" + self.categories[2].image
+                    
+                    self.filterCategory1.alpha = 1
+                    self.Category1.sd_setImage(with: URL(string: category1Url), placeholderImage: UIImage(named: "Rectangle 393"), options: [.continueInBackground, .progressiveLoad])
+                    self.categoryName1.text = self.categories[0].name
+                    
+                    self.filterCategory2.alpha = 1
+                    self.Category2.sd_setImage(with: URL(string: category2Url), placeholderImage: UIImage(named: "Rectangle 393"), options: [.continueInBackground, .progressiveLoad])
+                    self.categoryName2.text = self.categories[1].name
+                    
+                    
+                    self.filterCategory3.alpha = 1
+                    self.Category3.sd_setImage(with: URL(string: category3Url), placeholderImage: UIImage(named: "Rectangle 393"), options: [.continueInBackground, .progressiveLoad])
+                    self.categoryName3.text = self.categories[2].name
+                }
+            }
+        }.resume()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
         Search.delegate = self
-        
-        
-        
+         
         trendingProducts.delegate = self
         trendingProducts.dataSource = self
-        
-        
-        
-        
+
         Friends.delegate = self
         Friends.dataSource = self
         
+        getCategories()
         /*Search.layer.masksToBounds = true
         Search.layer.borderWidth = 1
         Search.layer.borderColor = UIColor(red: 55/255, green: 59/255, blue: 100/255, alpha: 1).cgColor

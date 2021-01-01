@@ -10,7 +10,16 @@
         <attribute name="phone" optional="YES" attributeType="String"/>
         <attribute name="sexe" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="SearchHistory" representedClassName="SearchHistory" syncable="YES" codeGenerationType="class">
+        <attribute name="details" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="photo" optional="YES" attributeType="String"/>
+        <attribute name="searchId" optional="YES" attributeType="String"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+        <attribute name="userId" optional="YES" attributeType="String"/>
+    </entity>
     <elements>
         <element name="Connected" positionX="-63" positionY="-18" width="128" height="163"/>
+        <element name="SearchHistory" positionX="-63" positionY="45" width="128" height="133"/>
     </elements>
 </model>
