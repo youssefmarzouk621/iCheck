@@ -10,6 +10,14 @@ import MessageKit
 import InputBarAccessoryView
 import CoreData
 
+struct chatResponse :Decodable{
+    var _id:String
+    var sender:String
+    var receiver:String
+    var type:String
+    var message:String
+    var createdAt:String
+}
 struct Sender:SenderType {
     var senderId: String
     var displayName: String
@@ -31,14 +39,18 @@ class ChatBotController: MessagesViewController,MessagesDataSource,MessagesLayou
     
     
 
-
-    let connected = Sender(senderId: "connected", displayName: "Youssef Marzouk")
-    let iCheckBot = Sender(senderId: "iCheckBot", displayName: "iCheckBot")
+    
+    
+    var connected = Sender(senderId: "connected", displayName: "")
+    var iCheckBot = Sender(senderId: "iCheckBot", displayName: "")
+    var backResponse:backendResponse = backendResponse(message: "")
     fileprivate let baseURL = "https://polar-peak-71928.herokuapp.com/"
     
     var connectedUser:Customer = Customer(_id: "", firstName: "", lastName: "", email: "", password: "", phone: "", sexe: "", avatar: "", favorites: [])
-    var messages:[MessageType] = []
+    var friend:Customer = Customer(_id: "", firstName: "", lastName: "", email: "", password: "", phone: "", sexe: "", avatar: "", favorites: [])
     
+    var messages:[MessageType] = []
+    var chatList:[chatResponse] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         getConnectedUser()
@@ -66,6 +78,7 @@ class ChatBotController: MessagesViewController,MessagesDataSource,MessagesLayou
             let result = try managedContext.fetch(fetchRequest)
             for obj in result {
                 self.connectedUser._id=(obj.value(forKey: "id") as! String)
+                self.connected.displayName=(obj.value(forKey: "firstName") as! String)+" "+(obj.value(forKey: "lastName") as! String)
                 self.connectedUser.firstName=(obj.value(forKey: "firstName") as! String)
                 self.connectedUser.lastName=(obj.value(forKey: "lastName") as! String)
                 self.connectedUser.email=(obj.value(forKey: "email") as! String)
@@ -80,8 +93,46 @@ class ChatBotController: MessagesViewController,MessagesDataSource,MessagesLayou
     }
     
     func setupMessages() {
-        messages.append(Message(sender: iCheckBot, messageId: "1", sentDate: Date().addingTimeInterval(-86400), kind: .text("Bonjour")))
-        messages.append(Message(sender: connected, messageId: "2", sentDate: Date().addingTimeInterval(-76400), kind: .text("wakteh validation ?")))
+        /*messages.append(Message(sender: iCheckBot, messageId: "1", sentDate: Date().addingTimeInterval(-86400), kind: .text("Bonjour")))
+        messages.append(Message(sender: connected, messageId: "2", sentDate: Date().addingTimeInterval(-76400), kind: .text("wakteh validation ?")))*/
+        let parameters = ["senderId" : friend._id,"connectedId" : connectedUser._id]
+        guard let url = URL(string: baseURL+"api/chat/getMessages") else { return }
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        guard let httpBody = try? JSONSerialization.data(withJSONObject: parameters, options: []) else { return }
+        request.httpBody = httpBody
+        URLSession.shared.dataTask(with: request) { (data,response,error) in
+            if error == nil{
+                do {
+                    let decoder = JSONDecoder()
+                    self.chatList = try decoder.decode([chatResponse].self, from: data!)
+                    /*let json = try JSONSerialization.jsonObject(with: data!, options: [])
+                    print(json)*/
+                } catch {
+                    print("parse chat response :")
+                    print(error.localizedDescription)
+                }
+        
+                DispatchQueue.main.async {
+                    
+                    for message in self.chatList {
+                        let date = Date.getDateFromString(dateString: message.createdAt)
+                        if self.connectedUser._id==message.sender {//my message
+                            
+                            
+                            self.messages.append(Message(sender: self.connected, messageId: message._id, sentDate: date!, kind: .text(message.message)))
+                        }else{//sender message
+                            self.messages.append(Message(sender: self.iCheckBot, messageId: message._id, sentDate: date!, kind: .text(message.message)))
+                        }
+                    }
+                    self.messages.sort {
+                        $0.sentDate < $1.sentDate
+                    }
+                    self.messagesCollectionView.reloadData()
+                }
+            }
+        }.resume()
     }
     
     func currentSender() -> SenderType {
@@ -97,7 +148,7 @@ class ChatBotController: MessagesViewController,MessagesDataSource,MessagesLayou
     
     func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
         if message.sender.senderId == "iCheckBot" {
-            let avatarUrl = baseURL + "uploads/users/" + self.connectedUser.avatar
+            let avatarUrl = baseURL + "uploads/users/" + self.friend.avatar
             avatarView.sd_setImage(with: URL(string: avatarUrl), placeholderImage: UIImage(systemName: "person"), options: [.continueInBackground, .progressiveLoad])
         }
     }
@@ -115,6 +166,7 @@ class ChatBotController: MessagesViewController,MessagesDataSource,MessagesLayou
                 }
             })
         }
+    
     func isLastSectionVisible() -> Bool {
             
             guard !messages.isEmpty else { return false }
@@ -126,7 +178,32 @@ class ChatBotController: MessagesViewController,MessagesDataSource,MessagesLayou
 
 }
 
-
+extension Date {
+  static func getStringFromDate(date: Date) -> String {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "EEEE, MMM d, yyyy"
+    let dateString = dateFormatter.string(from: date)
+    return dateString
+  }
+  static func getDateFromString(dateString: String) -> Date? {
+    let formatter = ISO8601DateFormatter()
+    formatter.formatOptions = [.withInternetDateTime,
+                               .withDashSeparatorInDate,
+                               .withFullDate,
+                               .withFractionalSeconds,
+                               .withColonSeparatorInTimeZone]
+    guard let date = formatter.date(from: dateString) else {
+      return nil
+    }
+    return date
+  }
+  // get an ISO timestamp
+  static func getISOTimestamp() -> String {
+    let isoDateFormatter = ISO8601DateFormatter()
+    let timestamp = isoDateFormatter.string(from: Date())
+    return timestamp
+  }
+}
 
 extension ChatBotController: InputBarAccessoryViewDelegate {
 
@@ -152,16 +229,39 @@ extension ChatBotController: InputBarAccessoryViewDelegate {
         // Send button activity animation
         inputBar.sendButton.startAnimating()
         inputBar.inputTextView.placeholder = "Sending..."
-        //inputBar.inputTextView.resignFirstResponder()
         DispatchQueue.global(qos: .default).async {
-            // fake send request task
-            sleep(1)
-            DispatchQueue.main.async { [weak self] in
-                inputBar.sendButton.stopAnimating()
-                inputBar.inputTextView.placeholder = "Aa"
-                self?.insertMessages(components)
-                self?.messagesCollectionView.scrollToLastItem(animated: true)
+            var msg:String=""
+            for component in components {
+                msg = component as! String
             }
+            let parameters = ["sender" : self.connectedUser._id,"receiver" : self.friend._id,"type": "text","message": msg]
+            guard let url = URL(string: self.baseURL+"api/chat/addMessage") else { return }
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            guard let httpBody = try? JSONSerialization.data(withJSONObject: parameters, options: []) else { return }
+            request.httpBody = httpBody
+            URLSession.shared.dataTask(with: request) { (data,response,error) in
+                if error == nil{
+                    do {
+                        let decoder = JSONDecoder()
+                        self.backResponse = try decoder.decode(backendResponse.self, from: data!)
+                    } catch {
+                        print("parse chat response :")
+                        print(error.localizedDescription)
+                    }
+            
+                    DispatchQueue.main.async {
+                        if self.backResponse.message=="message Added Successfully"{
+                            inputBar.sendButton.stopAnimating()
+                            inputBar.inputTextView.placeholder = "Aa"
+                            self.insertMessages(components)
+                            self.messagesCollectionView.scrollToLastItem(animated: true)
+                        }
+                        
+                    }
+                }
+            }.resume()
         }
     }
 

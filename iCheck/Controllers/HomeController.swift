@@ -64,7 +64,7 @@ class HomeController: UIViewController, UISearchBarDelegate {
     
     
     @IBAction func seeAllFriends(_ sender: UIButton) {
-        performSegue(withIdentifier: "chatBotSegue", sender: sender)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -315,12 +315,22 @@ extension HomeController: UICollectionViewDelegateFlowLayout, UICollectionViewDa
             
             destination.Prod = product
         }
+        if segue.identifier=="chatBotSegue" {
+            let index = sender as! Int
+            let friend = customers[index]
+            let destination  = segue.destination as! ChatBotController
+            
+            destination.friend = friend
+        }
 
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView==trendingProducts {
             performSegue(withIdentifier: "prodDetailSegue", sender: indexPath.row)
+        }
+        if collectionView==Friends {
+            performSegue(withIdentifier: "chatBotSegue", sender: indexPath.row)
         }
     }
 }

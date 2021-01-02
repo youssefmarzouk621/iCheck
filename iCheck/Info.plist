@@ -20,6 +20,14 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>iCheck requires permissions to use the camera</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>The location is used for augmenting reality</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Save photos of your ARExperience</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Save photos of your AR experience</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>JosefinSans-VariableFont_wght</string>
@@ -70,14 +78,6 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>NSCameraUsageDescription</key>
-	<string>iCheck requires permissions to use the camera</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>The location is used for augmenting reality</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Save photos of your ARExperience</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Save photos of your AR experience</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 </dict>
