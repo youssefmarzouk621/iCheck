@@ -8,11 +8,13 @@ PODS:
   - SDWebImage (5.10.0):
     - SDWebImage/Core (= 5.10.0)
   - SDWebImage/Core (5.10.0)
+  - Starscream (4.0.4)
 
 DEPENDENCIES:
   - Cosmos
   - MessageKit
   - SDWebImage
+  - Starscream (~> 4.0.0)
 
 SPEC REPOS:
   trunk:
@@ -20,13 +22,15 @@ SPEC REPOS:
     - InputBarAccessoryView
     - MessageKit
     - SDWebImage
+    - Starscream
 
 SPEC CHECKSUMS:
   Cosmos: b5c6a9a637e28a061b54c8f8b1d8529d7d4db73f
   InputBarAccessoryView: 8e7fc09e9cba75e0fee5da13450e15c194806f69
   MessageKit: 3beb578737a5aa2bba25cc27c7b6d6faa09af5a7
   SDWebImage: 9169792e9eec3e45bba2a0c02f74bf8bd922d1ee
+  Starscream: 5178aed56b316f13fa3bc55694e583d35dd414d9
 
-PODFILE CHECKSUM: 3ff7e4d9cf3c6b85a20aa440f81379041c7572bd
+PODFILE CHECKSUM: 6f46e430fc95836e9b69a986c1fc4f8e7297356e
 
 COCOAPODS: 1.10.0

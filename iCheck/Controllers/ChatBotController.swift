@@ -9,7 +9,9 @@ import UIKit
 import MessageKit
 import InputBarAccessoryView
 import CoreData
+import Starscream
 
+// MARK: - Structs
 struct chatResponse :Decodable{
     var _id:String
     var sender:String
@@ -18,6 +20,7 @@ struct chatResponse :Decodable{
     var message:String
     var createdAt:String
 }
+
 struct Sender:SenderType {
     var senderId: String
     var displayName: String
@@ -30,31 +33,78 @@ struct Message:MessageType {
     var kind: MessageKind
 }
 
+struct SocketMessage:Decodable {
+    var senderId:String
+    var receiverId:String
+    var message:String
+    var type:String
+}
 
 
-class ChatBotController: MessagesViewController,MessagesDataSource,MessagesLayoutDelegate,MessagesDisplayDelegate {
+
+class ChatBotController: MessagesViewController,MessagesDataSource,MessagesLayoutDelegate,MessagesDisplayDelegate,WebSocketDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+            
+                return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { suggestedActions in
+                    
+                    let forward = UIAction(title: "Forward", image: UIImage(systemName: "arrowshape.turn.up.right")) { action in
+                        // Show share sheet
+                    }
+
+                    let delete = UIAction(title: "Delete", image: UIImage(systemName: "trash"),attributes: .destructive) { action in
+                        
+                    }
+
+
+                    // Create a UIMenu with all the actions as children
+                    return UIMenu(title: "", children: [forward, delete])
+                }
+            
+    }
+    
     func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {
         return messages[indexPath.section]
     }
     
     
+    
 
     
-    
+    // MARK: - Chat Variables
     var connected = Sender(senderId: "connected", displayName: "")
     var iCheckBot = Sender(senderId: "iCheckBot", displayName: "")
     var backResponse:backendResponse = backendResponse(message: "")
     fileprivate let baseURL = "https://polar-peak-71928.herokuapp.com/"
-    
     var connectedUser:Customer = Customer(_id: "", firstName: "", lastName: "", email: "", password: "", phone: "", sexe: "", avatar: "", favorites: [])
     var friend:Customer = Customer(_id: "", firstName: "", lastName: "", email: "", password: "", phone: "", sexe: "", avatar: "", favorites: [])
-    
     var messages:[MessageType] = []
     var chatList:[chatResponse] = []
+    
+    
+    
+    
+    
+    
+    
+    // MARK: - Socket Variables
+    var socket: WebSocket!
+    var isConnected = false
+    let server = WebSocketServer()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         getConnectedUser()
+        //setupCachedMessages()
         setupMessages()
+        
+        title=friend.firstName+" "+friend.lastName
+        var request = URLRequest(url: URL(string: "https://tranquil-journey-23890.herokuapp.com")!)
+        request.timeoutInterval = 5
+        socket = WebSocket(request: request)
+        socket.delegate = self
+        socket.connect()
+        
         
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
@@ -66,6 +116,62 @@ class ChatBotController: MessagesViewController,MessagesDataSource,MessagesLayou
         layout.textMessageSizeCalculator.outgoingAvatarSize = .zero
         }
         
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        print("close connection with socket")
+        socket.disconnect()
+    }
+    
+    
+    
+    // MARK: - WebSocketDelegate
+    func didReceive(event: WebSocketEvent, client: WebSocket) {
+        switch event {
+        case .connected(let headers):
+            isConnected = true
+            print("websocket is connected: \(headers)")
+        case .disconnected(let reason, let code):
+            isConnected = false
+            print("websocket is disconnected: \(reason) with code: \(code)")
+        case .text(let string):
+            print("----------------")
+            let data = Data(string.utf8)
+            do {
+                let receivedMessage = try JSONDecoder().decode(SocketMessage.self, from: data)
+                self.insertReceivedMessages(receivedMessage)
+            } catch {
+                print("parse socket message error :")
+                print(error.localizedDescription)
+            }
+
+            
+        case .binary(let data):
+            print("Received data: \(data.count)")
+        case .ping(_):
+            break
+        case .pong(_):
+            break
+        case .viabilityChanged(_):
+            break
+        case .reconnectSuggested(_):
+            break
+        case .cancelled:
+            isConnected = false
+        case .error(let error):
+            isConnected = false
+            handleError(error)
+        }
+    }
+    
+    func handleError(_ error: Error?) {
+        if let e = error as? WSError {
+            print("websocket encountered an error: \(e.message)")
+        } else if let e = error {
+            print("websocket encountered an error: \(e.localizedDescription)")
+        } else {
+            print("websocket encountered an error")
+        }
     }
     
     
@@ -92,9 +198,32 @@ class ChatBotController: MessagesViewController,MessagesDataSource,MessagesLayou
         }
     }
     
+    
+    // MARK: - Get Core Data Messages
+    func setupCachedMessages() -> Void {
+        /*let parameters = ["senderId" : friend._id,"connectedId" : connectedUser._id]
+        
+        for message in self.chatList {
+            let date = Date.getDateFromString(dateString: message.createdAt)
+            if self.connectedUser._id==message.sender {//my message
+                self.messages.append(Message(sender: self.connected, messageId: message._id, sentDate: date!, kind: .text(message.message)))
+            }else{//sender message
+                self.messages.append(Message(sender: self.iCheckBot, messageId: message._id, sentDate: date!, kind: .text(message.message)))
+            }
+        }
+        self.messages.sort {
+            $0.sentDate < $1.sentDate
+        }
+        
+        self.messagesCollectionView.reloadData()
+        self.messagesCollectionView.scrollToLastItem(animated: true)*/
+    }
+    
+    
+    
+    // MARK: - CollectionView DataSource
     func setupMessages() {
-        /*messages.append(Message(sender: iCheckBot, messageId: "1", sentDate: Date().addingTimeInterval(-86400), kind: .text("Bonjour")))
-        messages.append(Message(sender: connected, messageId: "2", sentDate: Date().addingTimeInterval(-76400), kind: .text("wakteh validation ?")))*/
+
         let parameters = ["senderId" : friend._id,"connectedId" : connectedUser._id]
         guard let url = URL(string: baseURL+"api/chat/getMessages") else { return }
         var request = URLRequest(url: url)
@@ -107,8 +236,6 @@ class ChatBotController: MessagesViewController,MessagesDataSource,MessagesLayou
                 do {
                     let decoder = JSONDecoder()
                     self.chatList = try decoder.decode([chatResponse].self, from: data!)
-                    /*let json = try JSONSerialization.jsonObject(with: data!, options: [])
-                    print(json)*/
                 } catch {
                     print("parse chat response :")
                     print(error.localizedDescription)
@@ -119,9 +246,8 @@ class ChatBotController: MessagesViewController,MessagesDataSource,MessagesLayou
                     for message in self.chatList {
                         let date = Date.getDateFromString(dateString: message.createdAt)
                         if self.connectedUser._id==message.sender {//my message
-                            
-                            
                             self.messages.append(Message(sender: self.connected, messageId: message._id, sentDate: date!, kind: .text(message.message)))
+                            
                         }else{//sender message
                             self.messages.append(Message(sender: self.iCheckBot, messageId: message._id, sentDate: date!, kind: .text(message.message)))
                         }
@@ -130,6 +256,7 @@ class ChatBotController: MessagesViewController,MessagesDataSource,MessagesLayou
                         $0.sentDate < $1.sentDate
                     }
                     self.messagesCollectionView.reloadData()
+                    self.messagesCollectionView.scrollToLastItem(animated: true)
                 }
             }
         }.resume()
@@ -170,14 +297,12 @@ class ChatBotController: MessagesViewController,MessagesDataSource,MessagesLayou
     func isLastSectionVisible() -> Bool {
             
             guard !messages.isEmpty else { return false }
-            
             let lastIndexPath = IndexPath(item: 0, section: messages.count - 1)
-            
             return messagesCollectionView.indexPathsForVisibleItems.contains(lastIndexPath)
         }
 
 }
-
+// MARK: - Extension to Parse Date
 extension Date {
   static func getStringFromDate(date: Date) -> String {
     let dateFormatter = DateFormatter()
@@ -205,13 +330,15 @@ extension Date {
   }
 }
 
-extension ChatBotController: InputBarAccessoryViewDelegate {
+extension ChatBotController: InputBarAccessoryViewDelegate
+{
 
     @objc
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
         processInputBar(messageInputBar)
     }
 
+    // MARK: - Send Messages With InputBar
     func processInputBar(_ inputBar: InputBarAccessoryView) {
         // Here we can parse for which substrings were autocompleted
         let attributedText = inputBar.inputTextView.attributedText!
@@ -234,6 +361,19 @@ extension ChatBotController: InputBarAccessoryViewDelegate {
             for component in components {
                 msg = component as! String
             }
+
+            // MARK: - Socket.Write
+            let params  = ["senderId" : self.connectedUser._id,"receiverId" : self.friend._id, "type" : "text", "message" : msg]
+            let jsonData = try? JSONSerialization.data(withJSONObject: params, options: [])
+            let jsonString = String(data: jsonData!, encoding: .utf8)
+            print(jsonString!)
+            self.socket.write(string: jsonString!)
+
+            
+            
+            
+            
+            
             let parameters = ["sender" : self.connectedUser._id,"receiver" : self.friend._id,"type": "text","message": msg]
             guard let url = URL(string: self.baseURL+"api/chat/addMessage") else { return }
             var request = URLRequest(url: url)
@@ -253,6 +393,7 @@ extension ChatBotController: InputBarAccessoryViewDelegate {
             
                     DispatchQueue.main.async {
                         if self.backResponse.message=="message Added Successfully"{
+                            
                             inputBar.sendButton.stopAnimating()
                             inputBar.inputTextView.placeholder = "Aa"
                             self.insertMessages(components)
@@ -264,6 +405,7 @@ extension ChatBotController: InputBarAccessoryViewDelegate {
             }.resume()
         }
     }
+    
 
     func insertMessages(_ data: [Any]) {
         for component in data {
@@ -273,5 +415,24 @@ extension ChatBotController: InputBarAccessoryViewDelegate {
                 insertMessage(message)
             }
         }
+    }
+    
+    
+    
+    // MARK: - Display Received Messages
+    func insertReceivedMessages(_ data: SocketMessage) {
+        if data.receiverId==connectedUser._id && data.senderId==friend._id{
+            switch data.type {
+            case "text":
+                let user = iCheckBot
+                let message = Message(sender: user, messageId: UUID().uuidString, sentDate: Date(), kind: .text(data.message))
+                insertMessage(message)
+            default:
+                let user = iCheckBot
+                let message = Message(sender: user, messageId: UUID().uuidString, sentDate: Date(), kind: .text(data.message))
+                insertMessage(message)
+            }
+        }
+
     }
 }

@@ -9,6 +9,7 @@ target 'iCheck' do
   pod 'Cosmos'
   pod 'SDWebImage'
   pod 'MessageKit'
+  pod 'Starscream', '~> 4.0.0'
 
   target 'iCheckTests' do
     inherit! :search_paths
