@@ -11,6 +11,9 @@
 		67D3913F9DF378B80ACC760C /* Pods_iCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1B4DB0D2FDA1506CEC42DA6 /* Pods_iCheck.framework */; };
 		7EFF5804257EE92E00CABD5D /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFF5803257EE92E00CABD5D /* NetworkService.swift */; };
 		9400C19DD4BF93E9BD3D0B61 /* Pods_iCheckTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A989CC6593F14C6EFF701571 /* Pods_iCheckTests.framework */; };
+		9C02F4D725A9FC01005AE190 /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C02F4D625A9FBFE005AE190 /* NotificationCell.swift */; };
+		9C02F4DF25A9FE24005AE190 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C02F4DE25A9FE24005AE190 /* NotificationController.swift */; };
+		9C02F4E425AA0F91005AE190 /* NotificationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C02F4E325AA0F91005AE190 /* NotificationResponse.swift */; };
 		9C10BA03257EB6DF008F751D /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C10BA02257EB6DF008F751D /* ProfileController.swift */; };
 		9C2756D52586B535003FF076 /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C2756D42586B534003FF076 /* SearchController.swift */; };
 		9C2E2764256986370008E3FA /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C2E2763256986370008E3FA /* Customer.swift */; };
@@ -21,6 +24,7 @@
 		9C5C0E1E257AF80B009DD1D3 /* RatePresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5C0E1D257AF80B009DD1D3 /* RatePresentationController.swift */; };
 		9C5C0E37257AFBCB009DD1D3 /* RateOverlay.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C5C0E36257AFBCB009DD1D3 /* RateOverlay.xib */; };
 		9C5C0E3C257AFF07009DD1D3 /* RateOverlayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5C0E3B257AFF07009DD1D3 /* RateOverlayController.swift */; };
+		9C64E10125ABA31E006F4E44 /* FriendController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C64E10025ABA31E006F4E44 /* FriendController.swift */; };
 		9C70824A2567D69200A79D32 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7082492567D69200A79D32 /* AppDelegate.swift */; };
 		9C70824C2567D69200A79D32 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C70824B2567D69200A79D32 /* SceneDelegate.swift */; };
 		9C70824E2567D69200A79D32 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C70824D2567D69200A79D32 /* ViewController.swift */; };
@@ -41,6 +45,7 @@
 		9C902BC52583F4A800ED1A9A /* OneTimeCodeTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C902BC42583F4A800ED1A9A /* OneTimeCodeTextField.swift */; };
 		9C902BCA2583F5B800ED1A9A /* VerificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C902BC92583F5B800ED1A9A /* VerificationController.swift */; };
 		9C920F2B25710FE10052D4DE /* netService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C920F2A25710FE10052D4DE /* netService.swift */; };
+		9C9934DC25AB371700A74C22 /* Friendship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9934DB25AB371700A74C22 /* Friendship.swift */; };
 		9CA33F7A259A78650047EFCF /* faceNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA33F79259A78650047EFCF /* faceNode.swift */; };
 		9CAF00C5257436B0008A8FAE /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CAF00C4257436B0008A8FAE /* Review.swift */; };
 		9CAF00D525746549008A8FAE /* RateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CAF00D425746549008A8FAE /* RateController.swift */; };
@@ -91,6 +96,9 @@
 		55A831F1A24AE060722DB378 /* Pods-iCheck.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iCheck.release.xcconfig"; path = "Target Support Files/Pods-iCheck/Pods-iCheck.release.xcconfig"; sourceTree = "<group>"; };
 		767D8485D704BEE7C4DB1D6A /* Pods-iCheckTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iCheckTests.debug.xcconfig"; path = "Target Support Files/Pods-iCheckTests/Pods-iCheckTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7EFF5803257EE92E00CABD5D /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		9C02F4D625A9FBFE005AE190 /* NotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
+		9C02F4DE25A9FE24005AE190 /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
+		9C02F4E325AA0F91005AE190 /* NotificationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationResponse.swift; sourceTree = "<group>"; };
 		9C10BA02257EB6DF008F751D /* ProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
 		9C2756D42586B534003FF076 /* SearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
 		9C2E2763256986370008E3FA /* Customer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Customer.swift; sourceTree = "<group>"; };
@@ -101,6 +109,7 @@
 		9C5C0E1D257AF80B009DD1D3 /* RatePresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatePresentationController.swift; sourceTree = "<group>"; };
 		9C5C0E36257AFBCB009DD1D3 /* RateOverlay.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RateOverlay.xib; sourceTree = "<group>"; };
 		9C5C0E3B257AFF07009DD1D3 /* RateOverlayController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateOverlayController.swift; sourceTree = "<group>"; };
+		9C64E10025ABA31E006F4E44 /* FriendController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendController.swift; sourceTree = "<group>"; };
 		9C7082462567D69200A79D32 /* iCheck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iCheck.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C7082492567D69200A79D32 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9C70824B2567D69200A79D32 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -127,6 +136,7 @@
 		9C902BC42583F4A800ED1A9A /* OneTimeCodeTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneTimeCodeTextField.swift; sourceTree = "<group>"; };
 		9C902BC92583F5B800ED1A9A /* VerificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationController.swift; sourceTree = "<group>"; };
 		9C920F2A25710FE10052D4DE /* netService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = netService.swift; sourceTree = "<group>"; };
+		9C9934DB25AB371700A74C22 /* Friendship.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friendship.swift; sourceTree = "<group>"; };
 		9CA33F79259A78650047EFCF /* faceNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = faceNode.swift; sourceTree = "<group>"; };
 		9CAF00C4257436B0008A8FAE /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
 		9CAF00D425746549008A8FAE /* RateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateController.swift; sourceTree = "<group>"; };
@@ -329,6 +339,9 @@
 				9CD1D29D259AAF38001AD6D8 /* ScieneView+Extension.swift */,
 				9CD1D2A2259AAF74001AD6D8 /* Utilities.swift */,
 				9CD1D2A7259AAFBE001AD6D8 /* TextManager.swift */,
+				9C02F4DE25A9FE24005AE190 /* NotificationController.swift */,
+				9C02F4D625A9FBFE005AE190 /* NotificationCell.swift */,
+				9C64E10025ABA31E006F4E44 /* FriendController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -343,6 +356,8 @@
 				9C31BFE4257D194C00C7E127 /* Favorite.swift */,
 				9C7CDB5B2587AC2C00C2D258 /* Category.swift */,
 				9C7CDB602587ACC600C2D258 /* Brand.swift */,
+				9C02F4E325AA0F91005AE190 /* NotificationResponse.swift */,
+				9C9934DB25AB371700A74C22 /* Friendship.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -618,16 +633,20 @@
 				9C70824E2567D69200A79D32 /* ViewController.swift in Sources */,
 				9C7CDB612587ACC600C2D258 /* Brand.swift in Sources */,
 				9CD1D2DA259AB563001AD6D8 /* Candle.swift in Sources */,
+				9C02F4E425AA0F91005AE190 /* NotificationResponse.swift in Sources */,
 				9C7082A9256869F200A79D32 /* Product.swift in Sources */,
 				9CD1D294259AAEC0001AD6D8 /* VirtualObjectSelectionViewController.swift in Sources */,
 				9CA33F7A259A78650047EFCF /* faceNode.swift in Sources */,
+				9C64E10125ABA31E006F4E44 /* FriendController.swift in Sources */,
 				9C920F2B25710FE10052D4DE /* netService.swift in Sources */,
 				9CD1D2A3259AAF74001AD6D8 /* Utilities.swift in Sources */,
 				9C46E1A32599336E0076C2C0 /* ARController.swift in Sources */,
 				9CD1D2E9259AB5FC001AD6D8 /* Vase.swift in Sources */,
 				9C72FC1B257BBAE300D792C4 /* ProductReviewsController.swift in Sources */,
 				9CD1D299259AAF08001AD6D8 /* ARCameraTrackingState.swift in Sources */,
+				9C02F4DF25A9FE24005AE190 /* NotificationController.swift in Sources */,
 				9CD1D28F259AADD2001AD6D8 /* SettingsViewController.swift in Sources */,
+				9C9934DC25AB371700A74C22 /* Friendship.swift in Sources */,
 				9CD1D29E259AAF38001AD6D8 /* ScieneView+Extension.swift in Sources */,
 				9C70824A2567D69200A79D32 /* AppDelegate.swift in Sources */,
 				9C5C0E3C257AFF07009DD1D3 /* RateOverlayController.swift in Sources */,
@@ -663,6 +682,7 @@
 				9CD1D2A8259AAFBE001AD6D8 /* TextManager.swift in Sources */,
 				9CD1D2D0259AB4F6001AD6D8 /* VirtualObjectsManager.swift in Sources */,
 				9C7CDB5C2587AC2C00C2D258 /* Category.swift in Sources */,
+				9C02F4D725A9FC01005AE190 /* NotificationCell.swift in Sources */,
 				9CD1D2E4259AB5D4001AD6D8 /* Lamp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -848,7 +868,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Sparkless.iCheck;
+				PRODUCT_BUNDLE_IDENTIFIER = Spark.iCheck;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "iCheck-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -871,7 +891,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Sparkless.iCheck;
+				PRODUCT_BUNDLE_IDENTIFIER = Spark.iCheck;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "iCheck-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;

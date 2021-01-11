@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreData
+
 struct SearchModel : Decodable {
     var searchId:String
     var name:String
@@ -32,7 +33,6 @@ class SearchController: UIViewController,UISearchBarDelegate {
         super.viewDidLoad()
         super.hideKeyboardWhenTappedAround()
         getConnectedUser()
-        
         getSearchHistory(connectedId:connectedUser._id)
         
         searchList.delegate = self
@@ -54,6 +54,7 @@ class SearchController: UIViewController,UISearchBarDelegate {
                     //print(obj.value(forKey: "id") as! String)
                     let userId = obj.value(forKey: "userId") as! String
                     if userId==connectedId {
+                        print("getting search history")
                         self.searchResult.append(SearchModel(searchId: obj.value(forKey: "searchId") as! String,
                                                              name: obj.value(forKey: "name") as! String,
                                                              description: obj.value(forKey: "details") as! String,
@@ -67,6 +68,8 @@ class SearchController: UIViewController,UISearchBarDelegate {
                   }, completion: { (finished:Bool) -> Void in
                 })
                 
+            }else{
+                print("search history empty")
             }
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
@@ -88,7 +91,6 @@ class SearchController: UIViewController,UISearchBarDelegate {
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
 
-    
     func searchBar(_ searchBar: UISearchBar,textDidChange searchText: String){
         if searchBar==SearchBar {
             if searchText.isEmpty {
@@ -150,8 +152,7 @@ extension SearchController: UICollectionViewDelegateFlowLayout, UICollectionView
         
         if searchResult[indexPath.row].type=="user" {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "userCell", for: indexPath)
-            
-            
+       
             
             cell.layer.cornerRadius = 10
             cell.layer.cornerRadius = 10
@@ -207,6 +208,7 @@ extension SearchController: UICollectionViewDelegateFlowLayout, UICollectionView
         if !(self.searchResult[indexPath.row].type=="filter") {
             saveSearchHistory(index: indexPath.row)
             
+            
         }
     }
     
@@ -232,23 +234,29 @@ extension SearchController: UICollectionViewDelegateFlowLayout, UICollectionView
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
+    
     func saveSearchHistory(index:Int) -> Void {
+        print("in search history")
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let managedContext = appDelegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "SearchHistory")
         do {
             let result = try managedContext.fetch(fetchRequest)
+            print("------Result------")
+            print(result)
             if !(result.count==0) {
+                print("result is not empty")
                 var found:Int=0
                 for obj in result {
-                    //print(obj.value(forKey: "id") as! String)
                     let searchId = obj.value(forKey: "searchId") as! String
                     if searchId==self.searchResult[index].searchId {
                         print("found in coredata")
-                        //redirectToSearchItem(index:index)
+                        redirectToSearchItem(index:index)
                         found=1
                     }
                 }
+                print("end parcours coredata")
+                
                 if found==0 {
                     print("didnt find search so appending")
                     let entity = NSEntityDescription.entity(forEntityName: "SearchHistory",in: managedContext)!
@@ -264,10 +272,29 @@ extension SearchController: UICollectionViewDelegateFlowLayout, UICollectionView
                     do {
                         try managedContext.save()
                         print(self.searchResult[index].type+" saved")
-                        //redirectToSearchItem(index:index)
+                        redirectToSearchItem(index:index)
                     } catch let error as NSError {
                         print("Could not save. \(error), \(error.userInfo)")
                     }
+                }
+            }else{
+                print("core data empty")
+                let entity = NSEntityDescription.entity(forEntityName: "SearchHistory",in: managedContext)!
+                let object = NSManagedObject(entity: entity,insertInto: managedContext)
+                
+                object.setValue(self.searchResult[index].searchId, forKey: "searchId")
+                object.setValue(self.searchResult[index].name, forKey: "name")
+                object.setValue(self.searchResult[index].description, forKey: "details")
+                object.setValue(self.searchResult[index].photo, forKey: "photo")
+                object.setValue(self.searchResult[index].type, forKey: "type")
+                object.setValue(self.connectedUser._id, forKey: "userId")
+                
+                do {
+                    try managedContext.save()
+                    print(self.searchResult[index].type+" saved")
+                    redirectToSearchItem(index:index)
+                } catch let error as NSError {
+                    print("Could not save. \(error), \(error.userInfo)")
                 }
             }
         } catch let error as NSError {
@@ -282,6 +309,14 @@ extension SearchController: UICollectionViewDelegateFlowLayout, UICollectionView
             let destination = segue.destination as! ProductDetailsController
             destination.ProdDetails = product
             destination.Prod = product?.product
+        }else if segue.identifier=="openSearchUser"{
+            let data = sender as! SearchModel
+            let destination = segue.destination as! FriendController
+            destination.connectedUser=self.connectedUser
+            destination.friend.avatar=data.photo
+            destination.profileName = data.name
+            destination.friend._id = data.searchId
+            
         }
     }
     
@@ -316,6 +351,7 @@ extension SearchController: UICollectionViewDelegateFlowLayout, UICollectionView
             
             
         } else if searchResult.type=="user"{
+            performSegue(withIdentifier: "openSearchUser", sender: self.searchResult[index])
             print("redirect user")
         }
     }

@@ -28,8 +28,9 @@ class HomeController: UIViewController, UISearchBarDelegate {
    
     fileprivate let baseURL = "https://polar-peak-71928.herokuapp.com/"
     
-    var connected:Customer? = nil
-    var customers = [Customer]()
+    var connectedUser:Customer = Customer(_id: "notyet", firstName: "", lastName: "", email: "", password: "", phone: "", sexe: "", avatar: "", favorites: [])
+    
+    var customers = [Friendship]()
     var products = [Product]()
     var categories = [Category]()
 
@@ -121,11 +122,33 @@ class HomeController: UIViewController, UISearchBarDelegate {
         }.resume()
     }
     
+    func getConnectedUser() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Connected")
+        do {
+            let result = try managedContext.fetch(fetchRequest)
+            for obj in result {
+                self.connectedUser._id=(obj.value(forKey: "id") as! String)
+                self.connectedUser.firstName=(obj.value(forKey: "firstName") as! String)
+                self.connectedUser.lastName=(obj.value(forKey: "lastName") as! String)
+                self.connectedUser.email=(obj.value(forKey: "email") as! String)
+                self.connectedUser.password=(obj.value(forKey: "password") as! String)
+                self.connectedUser.phone=(obj.value(forKey: "phone") as! String)
+                self.connectedUser.sexe=(obj.value(forKey: "sexe") as! String)
+                self.connectedUser.avatar=(obj.value(forKey: "avatar") as! String)
+            }
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
+        getConnectedUser()
+        
         Search.delegate = self
-         
         trendingProducts.delegate = self
         trendingProducts.dataSource = self
 
@@ -161,7 +184,7 @@ class HomeController: UIViewController, UISearchBarDelegate {
         
         
         
-        let friendsUrl = URL(string: baseURL+"api/user/friends")
+        /*let friendsUrl = URL(string: baseURL+"api/user/friends")
         URLSession.shared.dataTask(with: friendsUrl!) { (data,response,error) in
             if error == nil{
                 do {
@@ -175,7 +198,30 @@ class HomeController: UIViewController, UISearchBarDelegate {
                     
                 }
             }
+        }.resume()*/
+        let parameters = ["userId" : connectedUser._id]
+        guard let url = URL(string: baseURL+"api/user/getFriendship") else { return }
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        guard let httpBody = try? JSONSerialization.data(withJSONObject: parameters, options: []) else { return }
+        request.httpBody = httpBody
+        URLSession.shared.dataTask(with: request) { (data,response,error) in
+            if error == nil{
+                do {
+                    self.customers = try JSONDecoder().decode([Friendship].self, from: data!)
+                } catch {
+                    print("parse backend error")
+                }
+        
+                DispatchQueue.main.async {
+                    self.Friends.reloadData()
+                }
+            }
         }.resume()
+        
+        
+        
     }
     
 }
@@ -258,15 +304,9 @@ extension HomeController: UICollectionViewDelegateFlowLayout, UICollectionViewDa
             imageView.layer.cornerRadius = imageView.bounds.width/2
 
             
-            let avatarUrl = baseURL + "uploads/users/" + customers[indexPath.row].avatar
+            let avatarUrl = baseURL + "uploads/users/" + customers[indexPath.row].user.avatar
             //imageView.sd_setImage(with: URL(string: avatarUrl) )
-            imageView.sd_setImage(with: URL(string: avatarUrl), placeholderImage: UIImage(named: "nikeair"), options: [.continueInBackground, .progressiveLoad])
-            //imageView.downloaded(from: avatarUrl)
-            
-            
-            
-            
-            
+            imageView.sd_setImage(with: URL(string: avatarUrl), placeholderImage: UIImage(named: "youssef.marzouk"), options: [.continueInBackground, .progressiveLoad])
             
             return cell
         }
@@ -317,7 +357,7 @@ extension HomeController: UICollectionViewDelegateFlowLayout, UICollectionViewDa
         }
         if segue.identifier=="chatBotSegue" {
             let index = sender as! Int
-            let friend = customers[index]
+            let friend = customers[index].user
             let destination  = segue.destination as! ChatBotController
             
             destination.friend = friend

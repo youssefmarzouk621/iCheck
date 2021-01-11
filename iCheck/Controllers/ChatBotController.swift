@@ -246,10 +246,14 @@ class ChatBotController: MessagesViewController,MessagesDataSource,MessagesLayou
                     for message in self.chatList {
                         let date = Date.getDateFromString(dateString: message.createdAt)
                         if self.connectedUser._id==message.sender {//my message
-                            self.messages.append(Message(sender: self.connected, messageId: message._id, sentDate: date!, kind: .text(message.message)))
+                            self.messages.append(
+                                Message(sender: self.connected, messageId: message._id, sentDate: date!, kind: .text(message.message))
+                            )
                             
                         }else{//sender message
-                            self.messages.append(Message(sender: self.iCheckBot, messageId: message._id, sentDate: date!, kind: .text(message.message)))
+                            self.messages.append(
+                                Message(sender: self.iCheckBot, messageId: message._id, sentDate: date!, kind: .text(message.message))
+                            )
                         }
                     }
                     self.messages.sort {
