@@ -12,6 +12,7 @@ import UIKit
 import Photos
 
 class ARController: UIViewController {
+    var Prod:Product?
     var dragOnInfinitePlanesEnabled = false
     var currentGesture: Gesture?
 
@@ -30,7 +31,7 @@ class ARController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        title=Prod!.name
         Setting.registerDefaults()
         setupScene()
         setupDebug()

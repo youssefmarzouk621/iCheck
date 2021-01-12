@@ -103,8 +103,6 @@ class ProductDetailsController: UIViewController {
             }
         }.resume()
     }
-    
-    
 
     @objc func showMiracle() {
             let slideVC = RateOverlayController()
@@ -113,19 +111,21 @@ class ProductDetailsController: UIViewController {
             slideVC.transitioningDelegate = self
             self.present(slideVC, animated: true, completion: nil)
         }
-    
-    
+     
     @IBAction func rateAction(_ sender: UIButton) {
         showMiracle()
     }
-    
-    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
         if segue.identifier=="productReviewsSegue" {
             let product = Prod
             let destination = segue.destination as! ProductReviewsController
+            destination.Prod = product
+        }
+        if segue.identifier=="arSegue" {
+            let product = Prod
+            let destination = segue.destination as! ARController
             destination.Prod = product
         }
     }
@@ -147,7 +147,7 @@ class ProductDetailsController: UIViewController {
         
         super.hideKeyboardWhenTappedAround()
         Prod?.reviews = []
-        
+        title=Prod!.name
         productImages.delegate = self
         productImages.dataSource = self
         

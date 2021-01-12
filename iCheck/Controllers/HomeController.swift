@@ -169,36 +169,22 @@ class HomeController: UIViewController, UISearchBarDelegate {
 
                 do {
                     self.products = try JSONDecoder().decode([Product].self, from: data!)
-                    /*let json = try JSONSerialization.jsonObject(with: data!, options: [])
-                    print("before parse")
-                    print(json)*/
                 } catch {
                     print("parse product json error")
                 }
                 
                 DispatchQueue.main.async {
-                    self.trendingProducts.reloadData()
+                    self.trendingProducts.performBatchUpdates(
+                      {
+                        self.trendingProducts.reloadSections(NSIndexSet(index: 0) as IndexSet)
+                      }, completion: { (finished:Bool) -> Void in
+                    })
                 }
             }
         }.resume()
         
         
-        
-        /*let friendsUrl = URL(string: baseURL+"api/user/friends")
-        URLSession.shared.dataTask(with: friendsUrl!) { (data,response,error) in
-            if error == nil{
-                do {
-                    self.customers = try JSONDecoder().decode([Customer].self, from: data!)
-                } catch {
-                    print("parse friends error")
-                }
-                
-                DispatchQueue.main.async {
-                    self.Friends.reloadData()
-                    
-                }
-            }
-        }.resume()*/
+
         let parameters = ["userId" : connectedUser._id]
         guard let url = URL(string: baseURL+"api/user/getFriendship") else { return }
         var request = URLRequest(url: url)
@@ -215,7 +201,11 @@ class HomeController: UIViewController, UISearchBarDelegate {
                 }
         
                 DispatchQueue.main.async {
-                    self.Friends.reloadData()
+                    self.Friends.performBatchUpdates(
+                      {
+                        self.Friends.reloadSections(NSIndexSet(index: 0) as IndexSet)
+                      }, completion: { (finished:Bool) -> Void in
+                    })
                 }
             }
         }.resume()
@@ -223,6 +213,56 @@ class HomeController: UIViewController, UISearchBarDelegate {
         
         
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        var newList:[Friendship]=[]
+        
+        let parameters = ["userId" : connectedUser._id]
+        guard let url = URL(string: baseURL+"api/user/getFriendship") else { return }
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        guard let httpBody = try? JSONSerialization.data(withJSONObject: parameters, options: []) else { return }
+        request.httpBody = httpBody
+        URLSession.shared.dataTask(with: request) { (data,response,error) in
+            if error == nil{
+                do {
+                    newList = try JSONDecoder().decode([Friendship].self, from: data!)
+                } catch {
+                    print("parse backend error")
+                }
+        
+                DispatchQueue.main.async {
+                    if(newList.count==self.customers.count){
+                        var changed=false
+                        for i in 0..<newList.count {
+                            if !(newList[i]._id==self.customers[i]._id) {
+                                changed=true
+                            }
+                        }
+                        if changed {
+                            self.customers=newList
+                            self.Friends.performBatchUpdates(
+                              {
+                                self.Friends.reloadSections(NSIndexSet(index: 0) as IndexSet)
+                              }, completion: { (finished:Bool) -> Void in
+                            })
+                        }
+                    }else{
+                        self.customers=newList
+                        self.Friends.performBatchUpdates(
+                          {
+                            self.Friends.reloadSections(NSIndexSet(index: 0) as IndexSet)
+                          }, completion: { (finished:Bool) -> Void in
+                        })
+                    }
+                }
+            }
+        }.resume()
+    }
+
     
 }
 
