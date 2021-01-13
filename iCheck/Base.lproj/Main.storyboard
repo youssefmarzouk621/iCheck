@@ -1100,13 +1100,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notifications" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="tWI-Si-esb">
-                                <rect key="frame" x="7" y="7" width="361" height="29.5"/>
+                                <rect key="frame" x="7" y="7" width="361" height="25"/>
                                 <fontDescription key="fontDescription" name="JosefinSans-Thin_Regular" family="Josefin Sans" pointSize="25"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="O21-ap-SYL">
-                                <rect key="frame" x="0.0" y="36.5" width="375" height="581.5"/>
+                                <rect key="frame" x="0.0" y="32" width="375" height="586"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="3" minimumInteritemSpacing="10" id="vlU-jz-vTS">
                                     <size key="itemSize" width="372" height="128"/>
@@ -1513,6 +1513,11 @@
                                                             <color key="textColor" red="0.52823060749999995" green="0.58463180069999998" blue="0.71801471709999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" tag="5" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="move.3d" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="XxC-Ra-I9j">
+                                                            <rect key="frame" x="272" y="9" width="30" height="30"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <color key="tintColor" red="0.24984808380000001" green="0.30215775760000002" blue="0.62494051399999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </imageView>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </collectionViewCellContentView>
@@ -1689,6 +1694,7 @@
                         <segue destination="RyP-xR-qoB" kind="show" identifier="toPostsSegue" id="f8Z-gy-sdb"/>
                         <segue destination="85h-XR-Dwn" kind="presentation" identifier="homeToReviewsSegue" id="6W0-NX-Cbl"/>
                         <segue destination="VZ2-3M-m8w" kind="show" identifier="chatBotSegue" id="3l5-5O-Af9"/>
+                        <segue destination="ZDZ-HW-fWh" kind="show" identifier="homeToAR" id="mHC-qh-KCE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="37K-Pd-a0M" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1886,7 +1892,7 @@
                                                     <action selector="favoriteAction:" destination="khp-Ps-jD6" eventType="touchUpInside" id="6f3-oS-pSy"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4iX-mf-S1w">
+                                            <button opaque="NO" alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4iX-mf-S1w">
                                                 <rect key="frame" x="322" y="154" width="44" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <state key="normal" title="Check">
@@ -1925,6 +1931,7 @@
                     <size key="freeformSize" width="375" height="800"/>
                     <connections>
                         <outlet property="Reviews" destination="CHs-F8-WU7" id="WcL-OJ-OH2"/>
+                        <outlet property="checkBtn" destination="4iX-mf-S1w" id="DK1-ut-7Ri"/>
                         <outlet property="favoriteBtn" destination="wIt-bV-IGc" id="Cbt-Y0-lzK"/>
                         <outlet property="productDescription" destination="Ply-pR-w1x" id="uL7-nV-MNR"/>
                         <outlet property="productImage" destination="ea3-NX-8v5" id="a6H-nX-msS"/>
@@ -2080,7 +2087,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ua8-u0-2m7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6612" y="120.98950524737631"/>
+            <point key="canvasLocation" x="6514" y="993"/>
         </scene>
         <!--Product Reviews Controller-->
         <scene sceneID="kPT-Fc-tpa">
@@ -2254,7 +2261,8 @@
     </designables>
     <inferredMetricsTieBreakers>
         <segue reference="tGr-06-fLy"/>
-        <segue reference="TZY-ep-EQe"/>
+        <segue reference="6W0-NX-Cbl"/>
+        <segue reference="mHC-qh-KCE"/>
         <segue reference="BuI-zh-XtJ"/>
         <segue reference="3l5-5O-Af9"/>
         <segue reference="LJ6-Ek-Akq"/>
@@ -2275,6 +2283,7 @@
         <image name="loginback" width="1735" height="2458"/>
         <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <image name="mehdi.behira" width="1200" height="1200"/>
+        <image name="move.3d" catalog="system" width="128" height="106"/>
         <image name="newBalance574" width="3000" height="3000"/>
         <image name="person" catalog="system" width="128" height="117"/>
         <image name="restart" width="20" height="23"/>

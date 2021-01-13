@@ -36,6 +36,7 @@ class ProductDetailsController: UIViewController {
     
     @IBOutlet weak var favoriteBtn: UIButton!
     
+    @IBOutlet weak var checkBtn: UIButton!
     
     @IBOutlet weak var productImages: UICollectionView! = {
         let layout = UICollectionViewFlowLayout()
@@ -203,6 +204,13 @@ class ProductDetailsController: UIViewController {
                     }
                     self.Reviews.reloadData()
                     self.seeAllReviews.setTitle("See all("+String(self.Prod!.reviews!.count)+")", for: .normal)
+                    print("---------------ARModelId")
+                    if self.Prod!.ARModelId == -1 {
+                        print("no model")
+                    }else{
+                        print("display btn")
+                        self.checkBtn.alpha=1
+                    }
                 }
             }
         }.resume()

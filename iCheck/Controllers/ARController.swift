@@ -439,7 +439,7 @@ extension ARController {
             objectViewController.delegate = self
             
             //specify ARModel
-            objectViewController.delegate?.virtualObjectSelectionViewController(objectViewController, object: objectViewController.getObject(index: 1))
+            objectViewController.delegate?.virtualObjectSelectionViewController(objectViewController, object: objectViewController.getObject(index: Int(Prod!.ARModelId)))
 
 
 

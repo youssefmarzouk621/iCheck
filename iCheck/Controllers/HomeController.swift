@@ -292,24 +292,41 @@ extension HomeController: UICollectionViewDelegateFlowLayout, UICollectionViewDa
     
     
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        
             if collectionView == trendingProducts {
-                return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { suggestedActions in
-                    
-                    let share = UIAction(title: "Check it", image: UIImage(systemName: "sparkles")) { action in
-                        // Show share sheet
-                    }
+                if products[indexPath.row].ARModelId == -1 {
+                    return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { suggestedActions in
+                        
 
-                    let rename = UIAction(title: "Details", image: UIImage(systemName: "arrowshape.turn.up.right")) { action in
-                        self.performSegue(withIdentifier: "prodDetailSegue", sender: indexPath.row)
-                    }
+                        let rename = UIAction(title: "Details", image: UIImage(systemName: "arrowshape.turn.up.right")) { action in
+                            self.performSegue(withIdentifier: "prodDetailSegue", sender: indexPath.row)
+                        }
 
-                    let delete = UIAction(title: "Reviews", image: UIImage(systemName: "star")) { action in
-                        self.performSegue(withIdentifier: "homeToReviewsSegue", sender: indexPath.row)
-                    }
+                        let delete = UIAction(title: "Reviews", image: UIImage(systemName: "star")) { action in
+                            self.performSegue(withIdentifier: "homeToReviewsSegue", sender: indexPath.row)
+                        }
 
-                    // Create a UIMenu with all the actions as children
-                    return UIMenu(title: "", children: [share, rename, delete])
+                        return UIMenu(title: "", children: [rename, delete])
+                    }
+                }else{
+                    return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { suggestedActions in
+                        
+                        let share = UIAction(title: "Check it", image: UIImage(systemName: "sparkles")) { action in
+                            self.performSegue(withIdentifier: "homeToAR", sender: indexPath.row)
+                        }
+
+                        let rename = UIAction(title: "Details", image: UIImage(systemName: "arrowshape.turn.up.right")) { action in
+                            self.performSegue(withIdentifier: "prodDetailSegue", sender: indexPath.row)
+                        }
+
+                        let delete = UIAction(title: "Reviews", image: UIImage(systemName: "star")) { action in
+                            self.performSegue(withIdentifier: "homeToReviewsSegue", sender: indexPath.row)
+                        }
+
+                        return UIMenu(title: "", children: [share, rename, delete])
+                    }
                 }
+
             }else{
                 return nil
             }
@@ -361,7 +378,7 @@ extension HomeController: UICollectionViewDelegateFlowLayout, UICollectionViewDa
         let BrandLogo = contentView.viewWithTag(2) as! UIImageView
         let name = contentView.viewWithTag(3) as! UILabel
         let description = contentView.viewWithTag(4) as! UILabel
-        
+        let arLogo = contentView.viewWithTag(5) as! UIImageView
        
         let imgUrl = baseURL + "uploads/products/" + products[indexPath.row].image[0]
         
@@ -375,6 +392,11 @@ extension HomeController: UICollectionViewDelegateFlowLayout, UICollectionViewDa
         BrandLogo.contentMode = .scaleAspectFill
         name.text = products[indexPath.row].name
         description.text = products[indexPath.row].description
+        if products[indexPath.row].ARModelId == -1 {
+            arLogo.alpha=0
+        }else{
+            arLogo.alpha=1
+        }
         
         return cell
     }
@@ -385,6 +407,13 @@ extension HomeController: UICollectionViewDelegateFlowLayout, UICollectionViewDa
             let indexPath = sender as! Int
             let product = products[indexPath]
             let destination = segue.destination as! ProductDetailsController
+            
+            destination.Prod = product
+        }
+        if segue.identifier=="homeToAR" {
+            let indexPath = sender as! Int
+            let product = products[indexPath]
+            let destination = segue.destination as! ARController
             
             destination.Prod = product
         }
