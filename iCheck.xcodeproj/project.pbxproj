@@ -19,6 +19,9 @@
 		9C2E2764256986370008E3FA /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C2E2763256986370008E3FA /* Customer.swift */; };
 		9C2E276C2569C73D0008E3FA /* ProductDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C2E276B2569C73C0008E3FA /* ProductDetailsController.swift */; };
 		9C31BFE5257D194C00C7E127 /* Favorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C31BFE4257D194C00C7E127 /* Favorite.swift */; };
+		9C3E93C825ADDC1200067872 /* ARProductController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3E93C725ADDC1000067872 /* ARProductController.swift */; };
+		9C3E93D025ADDEB600067872 /* SingleTextManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3E93CF25ADDEB600067872 /* SingleTextManager.swift */; };
+		9C3E93D525ADE39A00067872 /* ProductVirtualObjectsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3E93D425ADE39A00067872 /* ProductVirtualObjectsManager.swift */; };
 		9C46E1A32599336E0076C2C0 /* ARController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C46E1A22599336E0076C2C0 /* ARController.swift */; };
 		9C53FC9A25799418000A6F3B /* ProductsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C53FC9925799418000A6F3B /* ProductsController.swift */; };
 		9C5C0E1E257AF80B009DD1D3 /* RatePresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5C0E1D257AF80B009DD1D3 /* RatePresentationController.swift */; };
@@ -104,6 +107,9 @@
 		9C2E2763256986370008E3FA /* Customer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Customer.swift; sourceTree = "<group>"; };
 		9C2E276B2569C73C0008E3FA /* ProductDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsController.swift; sourceTree = "<group>"; };
 		9C31BFE4257D194C00C7E127 /* Favorite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorite.swift; sourceTree = "<group>"; };
+		9C3E93C725ADDC1000067872 /* ARProductController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARProductController.swift; sourceTree = "<group>"; };
+		9C3E93CF25ADDEB600067872 /* SingleTextManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleTextManager.swift; sourceTree = "<group>"; };
+		9C3E93D425ADE39A00067872 /* ProductVirtualObjectsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductVirtualObjectsManager.swift; sourceTree = "<group>"; };
 		9C46E1A22599336E0076C2C0 /* ARController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARController.swift; sourceTree = "<group>"; };
 		9C53FC9925799418000A6F3B /* ProductsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsController.swift; sourceTree = "<group>"; };
 		9C5C0E1D257AF80B009DD1D3 /* RatePresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatePresentationController.swift; sourceTree = "<group>"; };
@@ -332,6 +338,7 @@
 				9CEBEE292585A8320055C835 /* FavoriteController.swift */,
 				9C2756D42586B534003FF076 /* SearchController.swift */,
 				9C46E1A22599336E0076C2C0 /* ARController.swift */,
+				9C3E93C725ADDC1000067872 /* ARProductController.swift */,
 				9CA33F79259A78650047EFCF /* faceNode.swift */,
 				9CD1D28E259AADD2001AD6D8 /* SettingsViewController.swift */,
 				9CD1D293259AAEC0001AD6D8 /* VirtualObjectSelectionViewController.swift */,
@@ -342,6 +349,7 @@
 				9C02F4DE25A9FE24005AE190 /* NotificationController.swift */,
 				9C02F4D625A9FBFE005AE190 /* NotificationCell.swift */,
 				9C64E10025ABA31E006F4E44 /* FriendController.swift */,
+				9C3E93CF25ADDEB600067872 /* SingleTextManager.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -379,6 +387,7 @@
 			children = (
 				9CD1D2CA259AB3F8001AD6D8 /* VirtualObject.swift */,
 				9CD1D2CF259AB4F6001AD6D8 /* VirtualObjectsManager.swift */,
+				9C3E93D425ADE39A00067872 /* ProductVirtualObjectsManager.swift */,
 				9CD1D2D4259AB533001AD6D8 /* Cup.swift */,
 				9CD1D2D9259AB563001AD6D8 /* Candle.swift */,
 				9CD1D2DE259AB5AF001AD6D8 /* Chair.swift */,
@@ -651,6 +660,7 @@
 				9C70824A2567D69200A79D32 /* AppDelegate.swift in Sources */,
 				9C5C0E3C257AFF07009DD1D3 /* RateOverlayController.swift in Sources */,
 				9C902BC52583F4A800ED1A9A /* OneTimeCodeTextField.swift in Sources */,
+				9C3E93C825ADDC1200067872 /* ARProductController.swift in Sources */,
 				9C2756D52586B535003FF076 /* SearchController.swift in Sources */,
 				9CD1D2D5259AB533001AD6D8 /* Cup.swift in Sources */,
 				9CEBEE25258522F80055C835 /* ChatBotController.swift in Sources */,
@@ -667,6 +677,7 @@
 				9CD1D2AF259AB27E001AD6D8 /* FocusSquare.swift in Sources */,
 				7EFF5804257EE92E00CABD5D /* NetworkService.swift in Sources */,
 				9CEBEE2A2585A8320055C835 /* FavoriteController.swift in Sources */,
+				9C3E93D525ADE39A00067872 /* ProductVirtualObjectsManager.swift in Sources */,
 				9C2E276C2569C73D0008E3FA /* ProductDetailsController.swift in Sources */,
 				9C70824C2567D69200A79D32 /* SceneDelegate.swift in Sources */,
 				9CD1D2C6259AB388001AD6D8 /* HitTestVisualization.swift in Sources */,
@@ -681,6 +692,7 @@
 				9CAF00DA25747C35008A8FAE /* backendResponse.swift in Sources */,
 				9CD1D2A8259AAFBE001AD6D8 /* TextManager.swift in Sources */,
 				9CD1D2D0259AB4F6001AD6D8 /* VirtualObjectsManager.swift in Sources */,
+				9C3E93D025ADDEB600067872 /* SingleTextManager.swift in Sources */,
 				9C7CDB5C2587AC2C00C2D258 /* Category.swift in Sources */,
 				9C02F4D725A9FC01005AE190 /* NotificationCell.swift in Sources */,
 				9CD1D2E4259AB5D4001AD6D8 /* Lamp.swift in Sources */,
@@ -868,7 +880,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Sparkie.iCheck;
+				PRODUCT_BUNDLE_IDENTIFIER = Sparke.iCheck;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "iCheck-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -891,7 +903,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Sparkie.iCheck;
+				PRODUCT_BUNDLE_IDENTIFIER = Sparke.iCheck;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "iCheck-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;

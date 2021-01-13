@@ -1100,13 +1100,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notifications" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="tWI-Si-esb">
-                                <rect key="frame" x="7" y="7" width="361" height="25"/>
+                                <rect key="frame" x="7" y="7" width="361" height="29.5"/>
                                 <fontDescription key="fontDescription" name="JosefinSans-Thin_Regular" family="Josefin Sans" pointSize="25"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="O21-ap-SYL">
-                                <rect key="frame" x="0.0" y="32" width="375" height="586"/>
+                                <rect key="frame" x="0.0" y="36.5" width="375" height="581.5"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="3" minimumInteritemSpacing="10" id="vlU-jz-vTS">
                                     <size key="itemSize" width="372" height="128"/>

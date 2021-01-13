@@ -108,3 +108,6 @@ class VirtualObjectSelectionViewController: UIViewController, UITableViewDataSou
 protocol VirtualObjectSelectionViewControllerDelegate: class {
     func virtualObjectSelectionViewController(_: VirtualObjectSelectionViewController, object: VirtualObject)
 }
+
+
+

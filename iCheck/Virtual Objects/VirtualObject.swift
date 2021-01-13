@@ -89,6 +89,8 @@ extension VirtualObject {
     }
 }
 
+
+
 // MARK: - Protocols for Virtual Objects
 
 protocol ReactsToScale {

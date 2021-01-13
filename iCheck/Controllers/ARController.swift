@@ -187,8 +187,10 @@ class ARController: UIViewController {
             UserDefaults.standard.set(showHitTestAPIVisualization, for: .showHitTestAPI)
             if showHitTestAPIVisualization {
                 hitTestVisualization = HitTestVisualization(sceneView: sceneView)
+                print("hit test TRUE")
             } else {
                 hitTestVisualization = nil
+                print("hit test FALSE")
             }
         }
     }
@@ -424,7 +426,24 @@ extension ARController {
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if !VirtualObjectsManager.shared.isAVirtualObjectPlaced() {
-            chooseObject(addObjectButton)
+            print("touch plane ended")
+            
+            if isLoadingObject { return }
+
+            textManager.cancelScheduledMessage(forType: .contentPlacement)
+
+            let rowHeight = 45
+            let popoverSize = CGSize(width: 250, height: rowHeight * VirtualObjectSelectionViewController.COUNT_OBJECTS)
+
+            let objectViewController = VirtualObjectSelectionViewController(size: popoverSize)
+            objectViewController.delegate = self
+            
+            //specify ARModel
+            objectViewController.delegate?.virtualObjectSelectionViewController(objectViewController, object: objectViewController.getObject(index: 1))
+
+
+
+            //chooseObject(addObjectButton)
             return
         }
 

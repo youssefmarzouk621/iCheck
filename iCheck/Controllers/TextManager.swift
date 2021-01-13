@@ -20,7 +20,6 @@ class TextManager {
     init(viewController: ARController) {
         self.viewController = viewController
     }
-
     func showMessage(_ text: String, autoHide: Bool = true) {
         messageHideTimer?.invalidate()
 
@@ -199,6 +198,7 @@ class TextManager {
 
     // MARK: - Private
     private var viewController: ARController!
+    
 
     // Timers for hiding regular and debug messages
     private var messageHideTimer: Timer?
